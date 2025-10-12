@@ -44,7 +44,7 @@ export const ProductCardFooter = ({
   }
 
   segments.push(
-    <span className={styles.readTime} key="duration">
+    <span key="duration">
       {readDurationLabel}
     </span>,
   )
