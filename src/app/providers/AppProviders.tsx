@@ -13,6 +13,7 @@ import {
   useAuthStoreApi,
   type AuthStore,
 } from '../../features/auth/auth-store'
+import { ThemeProvider } from '../../features/theme/ThemeProvider'
 import { createAppRouter } from '../router'
 
 type AppProvidersProps = {
@@ -49,11 +50,13 @@ export const AppProviders = ({ children }: AppProvidersProps) => {
   const [queryClient] = useState<QueryClient>(() => createQueryClient())
 
   return (
-    <AuthProvider store={authStore}>
-      <QueryClientProvider client={queryClient}>
-        <RouterWithContext />
-        {children}
-      </QueryClientProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider store={authStore}>
+        <QueryClientProvider client={queryClient}>
+          <RouterWithContext />
+          {children}
+        </QueryClientProvider>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
