@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.container h1 {
+  font-size: clamp(2rem, 2.5vw, 2.75rem);
+  margin-bottom: 0.5rem;
+}
+
+.container p {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.72);
+}
+

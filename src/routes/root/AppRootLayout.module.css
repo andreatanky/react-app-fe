@@ -1,0 +1,53 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.activeLink {
+  composes: link;
+  background: rgba(248, 250, 252, 0.14);
+}
+
+.link:hover {
+  background: rgba(248, 250, 252, 0.08);
+}
+
+.main {
+  flex: 1;
+  padding: 1.5rem;
+}
+
