@@ -1,0 +1,29 @@
+.bar {
+  --pill-gap-x: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px var(--pill-gap-x);
+  align-items: center;
+}
+
+.pill {
+  --radius: var(--pill-radius, 999px);
+}
+
+.clear {
+  appearance: none;
+  background: transparent;
+  opacity: 0.9;
+  border: 0;
+  border-radius: 100px;
+  color: #ffffff;
+  padding: 4px 16px;
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.clear:hover {
+  opacity: 1;
+  background: var(--color-surface);
+}

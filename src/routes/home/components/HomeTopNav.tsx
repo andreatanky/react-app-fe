@@ -16,8 +16,10 @@ export const HomeTopNav = ({ onHelp, onLogout }: HomeTopNavProps) => {
                         Help
                     </button>
                     <button type="button" className={styles.btn} onClick={onLogout} aria-label="Log Out">
-                        Log Out
+                        {/* <LogoutIcon className={styles.icon} aria-hidden="true" /> */}
+                        <span>Log out</span>
                     </button>
+                    {/* <LogoutIcon fontSize="small" /> */}
                 </div>
             </div>
         </nav>

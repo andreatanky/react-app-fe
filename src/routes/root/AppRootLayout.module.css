@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--color-bg);
+  background: var(--color-surface-container);
   color: var(--color-text);
   transition: background-color 0.25s ease, color 0.25s ease;
 }
@@ -79,8 +79,8 @@
 
 .main {
   flex: 1;
-  padding: 1.5rem;
-  background: var(--color-bg);
+  padding: 0;
+  background: var(--color-surface-container);
   color: var(--color-text);
   transition: background-color 0.25s ease, color 0.25s ease;
 }

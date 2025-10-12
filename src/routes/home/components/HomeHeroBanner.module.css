@@ -1,0 +1,21 @@
+.wrapper {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2.5rem;
+}
+
+.wrapper nav {
+  width: 100%;
+}
+
+.logo {
+  display: block;
+  width: min(100%, 460px);
+  max-width: 460px;
+  aspect-ratio: 460 / 56;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+}

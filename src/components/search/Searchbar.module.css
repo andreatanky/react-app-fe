@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  border-radius: 100px;
+  padding-inline: 8px;
+  background: var(--color-surface-container-high);
+  color: var(--color-outline);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  display: block;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.input::placeholder {
+  color: var(--color-outline);
+}
