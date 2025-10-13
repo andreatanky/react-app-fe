@@ -21,7 +21,7 @@ const MOCK_ACTIVE_PRODUCTS: Product[] = [
     systemDocId: 'prod-1',
     title: 'Exciting Discoveries in Renewable Energy',
     publishedDate: '2025-01-26',
-    expiryDate: '2025-02-09',
+    expiryDate: '2025-12-17',
     readProgress: 0,
     readingDuration: 7,
     isRead: false,
@@ -32,7 +32,7 @@ const MOCK_ACTIVE_PRODUCTS: Product[] = [
     systemDocId: 'prod-2',
     title: 'Technology Advancements: Revolutionizing Communication',
     publishedDate: '2025-01-24',
-    expiryDate: '2025-02-07',
+    expiryDate: '2025-12-17',
     readProgress: 1,
     readingDuration: 5,
     isRead: true,
@@ -43,7 +43,7 @@ const MOCK_ACTIVE_PRODUCTS: Product[] = [
     systemDocId: 'prod-3',
     title: 'How Enthusiasts Are Leading a Market Revival',
     publishedDate: '2025-01-21',
-    expiryDate: '2025-02-04',
+    expiryDate: '2025-12-17',
     readProgress: 0,
     readingDuration: 6,
     isRead: false,
@@ -54,7 +54,54 @@ const MOCK_ACTIVE_PRODUCTS: Product[] = [
     systemDocId: 'prod-2',
     title: 'Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication',
     publishedDate: '2025-01-24',
-    expiryDate: '2025-02-07',
+    expiryDate: '2025-12-17',
+    readProgress: 60,
+    readingDuration: 5,
+    isRead: true,
+    classification: 3,
+    isUrgent: false,
+  }
+]
+
+const MOCK_EXPIRED_PRODUCTS: Product[] = [
+  {
+    systemDocId: 'prod-1',
+    title: 'Exciting Discoveries in Renewable Energy',
+    publishedDate: '2025-01-26',
+    expiryDate: '2022-12-17',
+    readProgress: 0,
+    readingDuration: 7,
+    isRead: false,
+    classification: 4,
+    isUrgent: true,
+  },
+  {
+    systemDocId: 'prod-2',
+    title: 'Technology Advancements: Revolutionizing Communication',
+    publishedDate: '2025-01-24',
+    expiryDate: '2022-12-17',
+    readProgress: 1,
+    readingDuration: 5,
+    isRead: true,
+    classification: 5,
+    isUrgent: false,
+  },
+  {
+    systemDocId: 'prod-3',
+    title: 'How Enthusiasts Are Leading a Market Revival',
+    publishedDate: '2025-01-21',
+    expiryDate: '2022-12-17',
+    readProgress: 0,
+    readingDuration: 6,
+    isRead: false,
+    classification: 3,
+    isUrgent: false,
+  },
+  {
+    systemDocId: 'prod-2',
+    title: 'Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication',
+    publishedDate: '2025-01-24',
+    expiryDate: '2022-12-17',
     readProgress: 60,
     readingDuration: 5,
     isRead: true,
@@ -121,6 +168,15 @@ export const HomePage = () => {
           <Grid size={4}>
             <article className={styles.pane}>
               <h2>Expired</h2>
+              <div className={styles.productList}>
+                {MOCK_EXPIRED_PRODUCTS.map((product) => (
+                  <ProductCard
+                    key={product.systemDocId}
+                    product={product}
+                    onProductClick={handleProductClick}
+                  />
+                ))}
+              </div>
             </article>
           </Grid>
         </Grid>

@@ -28,6 +28,14 @@ const formatDate = (raw: string) => {
 const pluralise = (value: number, unit: string) =>
   `${value} ${unit}${value === 1 ? '' : 's'}`;
 
+const isExpired = (rawExpiry: string) => {
+  const parsed = Date.parse(rawExpiry)
+  if (Number.isNaN(parsed)) return false
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return parsed < today.getTime()
+}
+
 const getProgressPercent = (value: number) => {
   if (!Number.isFinite(value)) return 0
   if (value <= 1) return Math.round(value * 100)
@@ -45,6 +53,7 @@ export const ProductCard = ({
   const isRead = product.isRead
   const showDesktopLabel = isDesktopOnlyProduct(product.classification)
   const pieChartDegrees = [progressPercent, 100 - progressPercent]
+  const expired = isExpired(product.expiryDate)
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -54,7 +63,9 @@ export const ProductCard = ({
   }
 
   const cardClasses = [styles.card]
-  if (isRead) {
+  if (expired) {
+    cardClasses.push(styles.expired)
+  } else if (isRead) {
     cardClasses.push(styles.read)
   } else {
     cardClasses.push(styles.unread)
@@ -62,13 +73,18 @@ export const ProductCard = ({
 
   if (className) cardClasses.push(className)
 
+  const titleClasses = [styles.title]
+  if (expired) {
+    titleClasses.push(styles.titleClamp)
+  }
+
   return (
     <article
       className={cardClasses.join(' ')}
       onClick={() => onProductClick(product.systemDocId)}
       onKeyDown={handleKeyDown}
     >
-      {!isRead ? (
+      {!expired && !isRead ? (
         <img
           className={styles.background}
           src="card_background_dark.svg"
@@ -82,7 +98,19 @@ export const ProductCard = ({
             <span className={styles.metaItem}>Published {publishedDisplay}</span>
           ) : null}
 
-          <span className={styles.metaItem}>Expires in 4 days</span>
+          {expired ? (
+            <>
+              {publishedDisplay ? (
+                <img
+                  className={styles.metaSeparator}
+                  src="interpunct.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+              ) : null}
+              <span className={styles.metaItem}>Expired</span>
+            </>
+          ) : null}
 
           <span className={styles.spacer} />
           <div className={styles.badges}>
@@ -96,7 +124,7 @@ export const ProductCard = ({
           </div>
         </div>
 
-        <h3 className={styles.title}>{product.title}</h3>
+        <h3 className={titleClasses.join(' ')}>{product.title}</h3>
 
         <ProductCardFooter
           showDesktopLabel={showDesktopLabel}

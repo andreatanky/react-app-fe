@@ -44,6 +44,14 @@ export const ProductCardFooter = ({
   }
 
   segments.push(
+    <img
+      className={styles.separator}
+      src="interpunct.svg"
+      alt=""
+      aria-hidden="true"
+    />
+  )
+  segments.push(
     <span key="duration">
       {readDurationLabel}
     </span>,
@@ -63,14 +71,6 @@ export const ProductCardFooter = ({
       <div className={styles.readStatusContainer}>
         {segments.map((segment, index) => (
           <span className={styles.footerItem} key={index}>
-            {index > 0 ? (
-              <img
-                className={styles.separator}
-                src="interpunct.svg"
-                alt=""
-                aria-hidden="true"
-              />
-            ) : null}
             {segment}
           </span>
         ))}
