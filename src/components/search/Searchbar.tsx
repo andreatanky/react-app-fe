@@ -1,5 +1,6 @@
 import { FormEvent } from 'react'
 import styles from './SearchBar.module.css'
+import searchIcon from '@/assets/icons/search_icon.svg';
 
 export type SearchbarProps = {
     query: string
@@ -19,7 +20,7 @@ export const Searchbar = ({ query, onQueryChange, onSubmit, placeholder = "Searc
         <span className={styles.icon} aria-hidden="true">
             <img
                 className={styles.logo}
-                src="/search_icon.svg"
+                src={searchIcon}
                 alt="Search"
             />
         </span>

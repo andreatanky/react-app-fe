@@ -7,11 +7,11 @@ import {
 import { QueryClient } from '@tanstack/react-query'
 import type { StoreApi } from 'zustand'
 
-import { type AuthStore } from '../features/auth/auth-store'
-import { AppRootLayout } from '../routes/root/AppRootLayout'
-import { HomePage } from '../routes/home/HomePage'
-import { HelpPage } from '../routes/help/HelpPage'
-import { ReadingEnvironmentPage } from '../routes/reading/ReadingEnvironmentPage'
+import { type AuthStore } from '../store/authStore'
+import { AppRootLayout } from './AppRootLayout'
+import { HomePage } from '../../features/home/HomePage'
+import { HelpPage } from '../../features/help/HelpPage'
+import { ReadingEnvironmentPage } from '../../features/reading/ReadingEnvironmentPage'
 
 export type AppRouterContext = {
   queryClient: QueryClient

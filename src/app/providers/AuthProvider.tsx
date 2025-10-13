@@ -6,7 +6,7 @@ import {
   AuthStoreContext,
   createAuthStore,
   type AuthState,
-} from './auth-store'
+} from '../store/authStore'
 
 type AuthProviderProps = PropsWithChildren<{
   store?: StoreApi<AuthStore>

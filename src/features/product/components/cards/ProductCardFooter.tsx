@@ -1,8 +1,10 @@
 import { type ReactNode } from 'react'
 
-import Label from '../labels/Label'
-import PieChart from '../piechart/PieChart'
+import Label from '../../../../components/labels/Label'
+import PieChart from '../../../../components/piechart/PieChart'
 import styles from './ProductCard.module.css'
+import interpunct from '@/assets/icons/interpunct.svg';
+import task_read from '@/assets/icons/task_alt.svg';
 
 type ProductCardFooterProps = {
   showDesktopLabel: boolean
@@ -30,7 +32,7 @@ export const ProductCardFooter = ({
   } else if (progressPercent >= 100) {
     segments.push(
       <span className={styles.metaItem} key="status-read">
-        <img className={styles.icon} src="task_alt.svg" alt="Complete" />
+        <img className={styles.icon} src={task_read} alt="Complete" />
         <span>Read</span>
       </span>,
     )
@@ -46,7 +48,7 @@ export const ProductCardFooter = ({
   segments.push(
     <img
       className={styles.separator}
-      src="interpunct.svg"
+      src={interpunct}
       alt=""
       aria-hidden="true"
     />

@@ -1,4 +1,4 @@
-import type { Product } from '../../models/Product'
+import type { Product } from '../../features/product/models/Product'
 import { MOCK_ACTIVE_PRODUCTS, MOCK_EXPIRED_PRODUCTS } from '../products'
 
 export const ACTIVE_PAGE_SIZE = 5

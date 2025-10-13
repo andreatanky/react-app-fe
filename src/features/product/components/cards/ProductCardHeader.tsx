@@ -1,5 +1,6 @@
-import Label from '../labels/Label'
+import Label from '../../../../components/labels/Label'
 import styles from './ProductCard.module.css'
+import interpunct from '@/assets/icons/interpunct.svg';
 
 type ProductCardHeaderProps = {
   publishedDisplay: string | null
@@ -18,7 +19,7 @@ export const ProductCardHeader = ({
         <span className={styles.metaItem}>Published {publishedDisplay}</span>
         <img
           className={styles.separator}
-          src="interpunct.svg"
+          src={interpunct}
           alt=""
           aria-hidden="true"
         />

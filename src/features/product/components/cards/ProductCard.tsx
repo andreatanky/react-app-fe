@@ -1,7 +1,7 @@
 import type { KeyboardEvent } from 'react'
 
 import { Product } from '../../models/Product'
-import { isDesktopOnlyProduct } from '../../utils/productUtils'
+import { isDesktopOnlyProduct } from '../../../../utils/productUtils'
 import ProductCardFooter from './ProductCardFooter'
 import ProductCardHeader from './ProductCardHeader'
 import styles from './ProductCard.module.css'

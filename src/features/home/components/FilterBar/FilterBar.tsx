@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { FilterPill } from '../../../components/buttons/FilterPill'
+import { FilterPill } from '../../../../components/buttons/FilterPill'
 import styles from './FilterBar.module.css'
 
 export type FilterItem = {

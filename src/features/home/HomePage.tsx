@@ -2,13 +2,13 @@ import { FormEvent, useEffect, useRef, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
-import ProductCard from '../../components/cards/ProductCard'
+import ProductCard from '../product/components/cards/ProductCard'
 import { fetchActiveProducts, fetchExpiredProducts } from '../../mocks/api/productsApi'
 import { Searchbar } from '../../components/search/Searchbar'
 import styles from './HomePage.module.css'
-import { FilterBar, type FilterItem } from './components/FilterBar'
-import { HomeHeroBanner } from './components/HomeHeroBanner'
-import CompactNavBar from './components/CompactNavBar'
+import { FilterBar, type FilterItem } from './components/FilterBar/FilterBar'
+import { HomeHeroBanner } from './components/HomeHeroBanner/HomeHeroBanner'
+import CompactNavBar from './components/CompactNavBar/CompactNavBar'
 
 const ITEMS: FilterItem[] = [
   { key: 'urgent', label: 'Urgent' },

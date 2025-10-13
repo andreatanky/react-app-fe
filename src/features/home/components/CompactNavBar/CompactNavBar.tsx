@@ -1,7 +1,8 @@
 import type { FormEvent } from 'react'
 
-import { FilterBar, type FilterItem } from './FilterBar'
+import { FilterBar, type FilterItem } from '../FilterBar/FilterBar'
 import styles from './CompactNavBar.module.css'
+import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
 
 type CompactNavBarProps = {
     visible: boolean
@@ -33,7 +34,7 @@ export const CompactNavBar = ({
     <div className={[styles.container, visible ? styles.visible : ''].join(' ')}>
         <div className={styles.content}>
             <div className={styles.topRow}>
-                <img src="/dailynews_logo.png" alt="DailyNews" className={styles.logo} />
+                <img src={dailyNewsLogo} alt="DailyNews" className={styles.logo} />
 
                 <div className={styles.actions}>
                     <button type="button" className={styles.actionButton} onClick={onSearchAction}>

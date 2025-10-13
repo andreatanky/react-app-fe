@@ -1,4 +1,4 @@
-import type { Product } from "../models/Product"
+import type { Product } from "../features/product/models/Product"
 
 export const MOCK_ACTIVE_PRODUCTS: Product[] = [
   {

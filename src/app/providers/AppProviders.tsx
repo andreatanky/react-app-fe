@@ -7,14 +7,14 @@ import {
 import { RouterProvider } from '@tanstack/react-router'
 import { StoreApi } from 'zustand'
 
-import { AuthProvider } from '../../features/auth/AuthProvider'
+import { AuthProvider } from './AuthProvider'
 import {
   createAuthStore,
   useAuthStoreApi,
   type AuthStore,
-} from '../../features/auth/auth-store'
-import { ThemeProvider } from '../../features/theme/ThemeProvider'
-import { createAppRouter } from '../router'
+} from '../store/authStore'
+import { ThemeProvider } from './ThemeProvider'
+import { createAppRouter } from '../router/router'
 
 type AppProvidersProps = {
   children?: ReactNode
