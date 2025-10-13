@@ -6,7 +6,7 @@
   border: 0;
   display: inline-flex;
   align-items: center;
-  padding: 4px 16px;
+  padding: 3px 16px;
   border-radius: var(--radius);
   cursor: pointer;
   user-select: none;
@@ -39,7 +39,7 @@
   border-radius: 0;
 }
 
-.joined + .joined {
+.joined+.joined {
   margin-left: calc(-1 * var(--pill-gap-x, 12px));
 }
 
@@ -57,7 +57,7 @@
   position: relative;
 }
 
-.withDivider + .withDivider::before {
+.withDivider+.withDivider::before {
   content: '';
   position: absolute;
   left: -1px;
