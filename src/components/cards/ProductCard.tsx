@@ -2,8 +2,8 @@ import type { KeyboardEvent } from 'react'
 
 import { Product } from '../../models/Product'
 import { isDesktopOnlyProduct } from '../../utils/productUtils'
-import Label from '../labels/Label'
 import ProductCardFooter from './ProductCardFooter'
+import ProductCardHeader from './ProductCardHeader'
 import styles from './ProductCard.module.css'
 
 type ProductCardProps = {
@@ -84,7 +84,7 @@ export const ProductCard = ({
       onClick={() => onProductClick(product.systemDocId)}
       onKeyDown={handleKeyDown}
     >
-      {!expired && !isRead ? (
+      {!isRead ? (
         <img
           className={styles.background}
           src="card_background_dark.svg"
@@ -93,36 +93,11 @@ export const ProductCard = ({
       ) : null}
 
       <div className={styles.content}>
-        <div className={styles.metaRow}>
-          {publishedDisplay ? (
-            <span className={styles.metaItem}>Published {publishedDisplay}</span>
-          ) : null}
-
-          {expired ? (
-            <>
-              {publishedDisplay ? (
-                <img
-                  className={styles.metaSeparator}
-                  src="interpunct.svg"
-                  alt=""
-                  aria-hidden="true"
-                />
-              ) : null}
-              <span className={styles.metaItem}>Expired</span>
-            </>
-          ) : null}
-
-          <span className={styles.spacer} />
-          <div className={styles.badges}>
-            {product.isUrgent ? (
-              <Label
-                text="Urgent"
-                backgroundColor="var(--color-secondary)"
-                textColor="var(--color-on-primary, #0f172a)"
-              />
-            ) : null}
-          </div>
-        </div>
+        <ProductCardHeader
+          publishedDisplay={publishedDisplay}
+          expired={expired}
+          isUrgent={product.isUrgent}
+        />
 
         <h3 className={titleClasses.join(' ')}>{product.title}</h3>
 
