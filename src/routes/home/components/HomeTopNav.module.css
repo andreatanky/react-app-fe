@@ -30,12 +30,6 @@
     transition: background-color 0.2s ease;
 }
 
-.icon {
-    font-size: 1.1em;
-    /* tweak size if needed */
-    line-height: 1;
-}
-
 .btn:hover {
     background-color: var(--color-outline);
 }
