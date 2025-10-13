@@ -104,7 +104,7 @@ export const HomePage = () => {
           spacing={3}
           className={styles.panes}
         >
-          <Grid size={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <article className={styles.pane}>
               <h2>Active</h2>
               <div>
@@ -118,7 +118,7 @@ export const HomePage = () => {
               </div>
             </article>
           </Grid>
-          <Grid size={4}>
+          <Grid sx={{ display: { xs: 'none', md: 'block' } }} size={{ md: 4 }}>
             <article className={styles.pane}>
               <h2>Expired</h2>
               <div>
