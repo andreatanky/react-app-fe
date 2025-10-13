@@ -153,7 +153,7 @@ export const HomePage = () => {
           <Grid size={8}>
             <article className={styles.pane}>
               <h2>Active</h2>
-              <div className={styles.productList}>
+              <div>
                 {MOCK_ACTIVE_PRODUCTS.map((product) => (
                   <ProductCard
                     key={product.systemDocId}
@@ -168,7 +168,7 @@ export const HomePage = () => {
           <Grid size={4}>
             <article className={styles.pane}>
               <h2>Expired</h2>
-              <div className={styles.productList}>
+              <div>
                 {MOCK_EXPIRED_PRODUCTS.map((product) => (
                   <ProductCard
                     key={product.systemDocId}
