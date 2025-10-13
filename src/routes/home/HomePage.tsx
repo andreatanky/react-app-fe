@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react'
 import Grid from '@mui/material/Grid'
 
 import ProductCard from '../../components/cards/ProductCard'
-import type { Product } from '../../models/Product'
+import { MOCK_ACTIVE_PRODUCTS, MOCK_EXPIRED_PRODUCTS } from '../../mocks/products'
 import { Searchbar } from '../../components/search/Searchbar'
 import styles from './HomePage.module.css'
 import { FilterBar, type FilterItem } from './components/FilterBar'
@@ -14,100 +14,6 @@ const ITEMS: FilterItem[] = [
   { key: 'inProgress', label: 'In Progress', segment: 'readStatus' },
   { key: 'expired', label: 'Expired' },
   { key: 'desktopOnly', label: 'Desktop Only', segment: 'platform' },
-]
-
-const MOCK_ACTIVE_PRODUCTS: Product[] = [
-  {
-    systemDocId: 'prod-1',
-    title: 'Exciting Discoveries in Renewable Energy',
-    publishedDate: '2025-01-26',
-    expiryDate: '2025-12-17',
-    readProgress: 0,
-    readingDuration: 7,
-    isRead: false,
-    classification: 4,
-    isUrgent: true,
-  },
-  {
-    systemDocId: 'prod-2',
-    title: 'Technology Advancements: Revolutionizing Communication',
-    publishedDate: '2025-01-24',
-    expiryDate: '2025-12-17',
-    readProgress: 1,
-    readingDuration: 5,
-    isRead: true,
-    classification: 5,
-    isUrgent: false,
-  },
-  {
-    systemDocId: 'prod-3',
-    title: 'How Enthusiasts Are Leading a Market Revival',
-    publishedDate: '2025-01-21',
-    expiryDate: '2025-12-17',
-    readProgress: 0,
-    readingDuration: 6,
-    isRead: false,
-    classification: 3,
-    isUrgent: false,
-  },
-  {
-    systemDocId: 'prod-2',
-    title: 'Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication',
-    publishedDate: '2025-01-24',
-    expiryDate: '2025-12-17',
-    readProgress: 60,
-    readingDuration: 5,
-    isRead: true,
-    classification: 3,
-    isUrgent: false,
-  }
-]
-
-const MOCK_EXPIRED_PRODUCTS: Product[] = [
-  {
-    systemDocId: 'prod-1',
-    title: 'Exciting Discoveries in Renewable Energy',
-    publishedDate: '2025-01-26',
-    expiryDate: '2022-12-17',
-    readProgress: 0,
-    readingDuration: 7,
-    isRead: false,
-    classification: 4,
-    isUrgent: true,
-  },
-  {
-    systemDocId: 'prod-2',
-    title: 'Technology Advancements: Revolutionizing Communication',
-    publishedDate: '2025-01-24',
-    expiryDate: '2022-12-17',
-    readProgress: 1,
-    readingDuration: 5,
-    isRead: true,
-    classification: 5,
-    isUrgent: false,
-  },
-  {
-    systemDocId: 'prod-3',
-    title: 'How Enthusiasts Are Leading a Market Revival',
-    publishedDate: '2025-01-21',
-    expiryDate: '2022-12-17',
-    readProgress: 0,
-    readingDuration: 6,
-    isRead: false,
-    classification: 3,
-    isUrgent: false,
-  },
-  {
-    systemDocId: 'prod-2',
-    title: 'Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication Technology Advancements: Revolutionizing Communication',
-    publishedDate: '2025-01-24',
-    expiryDate: '2022-12-17',
-    readProgress: 60,
-    readingDuration: 5,
-    isRead: true,
-    classification: 3,
-    isUrgent: false,
-  }
 ]
 
 export const HomePage = () => {
@@ -164,12 +70,11 @@ export const HomePage = () => {
               </div>
             </article>
           </Grid>
-
           <Grid size={4}>
             <article className={styles.pane}>
               <h2>Expired</h2>
               <div>
-                {MOCK_EXPIRED_PRODUCTS.map((product) => (
+                {MOCK_EXPIRED_PRODUCTS.slice(0, 5).map((product) => (
                   <ProductCard
                     key={product.systemDocId}
                     product={product}
@@ -178,10 +83,10 @@ export const HomePage = () => {
                 ))}
               </div>
             </article>
+            <p>View all expired</p>
           </Grid>
         </Grid>
       </section>
     </div>
   )
 }
-

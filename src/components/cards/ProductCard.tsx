@@ -84,7 +84,7 @@ export const ProductCard = ({
       onClick={() => onProductClick(product.systemDocId)}
       onKeyDown={handleKeyDown}
     >
-      {!isRead ? (
+      {!isExpired && !isRead ? (
         <img
           className={styles.background}
           src="card_background_dark.svg"
