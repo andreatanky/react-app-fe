@@ -1,8 +1,9 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import Grid from '@mui/material/Grid'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import ProductCard from '../../components/cards/ProductCard'
-import { MOCK_ACTIVE_PRODUCTS, MOCK_EXPIRED_PRODUCTS } from '../../mocks/products'
+import { fetchActiveProducts, fetchExpiredProducts } from '../../mocks/api/productsApi'
 import { Searchbar } from '../../components/search/Searchbar'
 import styles from './HomePage.module.css'
 import { FilterBar, type FilterItem } from './components/FilterBar'
@@ -22,6 +23,27 @@ export const HomePage = () => {
   const [selected, setSelected] = useState<string[]>([])
   const [showCompactNav, setShowCompactNav] = useState(false)
   const filterSectionRef = useRef<HTMLDivElement | null>(null)
+  const sentinelRef = useRef<HTMLDivElement | null>(null)
+  const {
+    data: activeData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isInitialLoading: isLoadingActive,
+  } = useInfiniteQuery({
+    queryKey: ['active-products'],
+    initialPageParam: 0,
+    queryFn: ({ pageParam = 0 }) => fetchActiveProducts({ pageParam }),
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+  })
+
+  const { data: expiredProducts = [], isLoading: isLoadingExpired } = useQuery({
+    queryKey: ['expired-products'],
+    queryFn: fetchExpiredProducts,
+  })
+
+  const visibleActiveProducts =
+    activeData?.pages.flatMap((page) => page.items) ?? []
 
   const submitSearch = (_event: FormEvent) => {
     console.log('search submit:', query, selected)
@@ -59,15 +81,33 @@ export const HomePage = () => {
       ([entry]) => {
         setShowCompactNav(!entry.isIntersecting)
       },
-      {
-        threshold: 0,
-      },
+      { threshold: 0 },
     )
 
     observer.observe(target)
 
     return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current
+    if (!sentinel) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage()
+        }
+      },
+      { rootMargin: '120px' },
+    )
+
+    observer.observe(sentinel)
+
+    return () => observer.disconnect()
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
 
   return (
     <div className={styles.page}>
@@ -108,13 +148,23 @@ export const HomePage = () => {
             <article className={styles.pane}>
               <h2>Active</h2>
               <div>
-                {MOCK_ACTIVE_PRODUCTS.map((product) => (
+                {visibleActiveProducts.map((product) => (
                   <ProductCard
                     key={product.systemDocId}
                     product={product}
                     onProductClick={handleProductClick}
                   />
                 ))}
+                <div ref={sentinelRef} />
+                <p className={styles.lazyStatus}>
+                  {isLoadingActive
+                    ? 'Loading articles...'
+                    : isFetchingNextPage
+                      ? 'Loading more articles...'
+                      : hasNextPage
+                        ? ''
+                        : 'Loaded all articles'}
+                </p>
               </div>
             </article>
           </Grid>
@@ -122,7 +172,7 @@ export const HomePage = () => {
             <article className={styles.pane}>
               <h2>Expired</h2>
               <div>
-                {MOCK_EXPIRED_PRODUCTS.slice(0, 5).map((product) => (
+                {(isLoadingExpired ? [] : expiredProducts).slice(0, 5).map((product) => (
                   <ProductCard
                     key={product.systemDocId}
                     product={product}
