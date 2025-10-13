@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import Grid from '@mui/material/Grid'
 
 import ProductCard from '../../components/cards/ProductCard'
@@ -7,6 +7,7 @@ import { Searchbar } from '../../components/search/Searchbar'
 import styles from './HomePage.module.css'
 import { FilterBar, type FilterItem } from './components/FilterBar'
 import { HomeHeroBanner } from './components/HomeHeroBanner'
+import CompactNavBar from './components/CompactNavBar'
 
 const ITEMS: FilterItem[] = [
   { key: 'urgent', label: 'Urgent' },
@@ -19,6 +20,8 @@ const ITEMS: FilterItem[] = [
 export const HomePage = () => {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState<string[]>([])
+  const [showCompactNav, setShowCompactNav] = useState(false)
+  const filterSectionRef = useRef<HTMLDivElement | null>(null)
 
   const submitSearch = (_event: FormEvent) => {
     console.log('search submit:', query, selected)
@@ -34,12 +37,57 @@ export const HomePage = () => {
     console.log('product click:', id)
   }
 
+  const handleSearchAction = () => {
+    filterSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const handleHelp = () => {
+    console.log('help click')
+  }
+
+  const handleLogout = () => {
+    console.log('logout')
+  }
+
+  useEffect(() => {
+    const target = filterSectionRef.current
+    if (!target) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowCompactNav(!entry.isIntersecting)
+      },
+      {
+        threshold: 0,
+      },
+    )
+
+    observer.observe(target)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className={styles.page}>
+      <CompactNavBar
+        visible={showCompactNav}
+        onSearchAction={handleSearchAction}
+        onHelp={handleHelp}
+        onLogout={handleLogout}
+        query={query}
+        onQueryChange={setQuery}
+        onSearchSubmit={submitSearch}
+        filterItems={ITEMS}
+        selectedFilters={selected}
+        onToggleFilter={toggle}
+        onClearFilters={() => setSelected([])}
+      />
       <section className={styles.container}>
-        <HomeHeroBanner onHelp={() => { }} onLogout={() => { }} />
+        <HomeHeroBanner onHelp={handleHelp} onLogout={handleLogout} />
 
-        <div className={styles.searchSectionWrapper}>
+        <div ref={filterSectionRef} className={styles.searchSectionWrapper}>
           <div className={styles.searchSection}>
             <Searchbar query={query} onQueryChange={setQuery} onSubmit={submitSearch} />
             <FilterBar
