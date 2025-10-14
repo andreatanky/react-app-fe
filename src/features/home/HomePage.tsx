@@ -8,7 +8,8 @@ import { Searchbar } from '../../components/search/Searchbar'
 import styles from './HomePage.module.css'
 import { FilterBar, type FilterItem } from './components/FilterBar/FilterBar'
 import { HomeHeroBanner } from './components/HomeHeroBanner/HomeHeroBanner'
-import CompactBar from './components/CompactBar/CompactBar'
+import CompactNavBar from './components/CompactNavBar/CompactNavBar'
+import CompactSearchBar from './components/SearchMode/CompactSearchBar'
 
 const ITEMS: FilterItem[] = [
   { key: 'urgent', label: 'Urgent' },
@@ -61,8 +62,14 @@ export const HomePage = () => {
   }
 
   const handleSearchAction = () => {
-    // filterSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
     setIsSearchState(true)
+  }
+
+  const handleExitSearch = () => {
+    setIsSearchState(false)
   }
 
   const handleHelp = () => {
@@ -113,21 +120,30 @@ export const HomePage = () => {
 
   return (
     <div className={styles.page}>
-      <CompactBar
-        visible={showCompactNav}
-        onSearchAction={handleSearchAction}
-        onHelp={handleHelp}
-        onLogout={handleLogout}
-        query={query}
-        onQueryChange={setQuery}
-        onSearchSubmit={submitSearch}
-        filterItems={ITEMS}
-        selectedFilters={selectedFilters}
-        onToggleFilter={toggle}
-        onClearFilters={() => setSelectedFilters([])}
-        isSearchState={isSearchState}
-        setIsSearchState={setIsSearchState}
-      />
+      {isSearchState ? (
+        <CompactSearchBar
+          visible
+          query={query}
+          onQueryChange={setQuery}
+          onSearchSubmit={submitSearch}
+          filterItems={ITEMS}
+          selectedFilters={selectedFilters}
+          onToggleFilter={toggle}
+          onClearFilters={() => setSelectedFilters([])}
+          onExitSearch={handleExitSearch}
+        />
+      ) : (
+        <CompactNavBar
+          visible={showCompactNav}
+          onSearchAction={handleSearchAction}
+          onHelp={handleHelp}
+          onLogout={handleLogout}
+          filterItems={ITEMS}
+          selectedFilters={selectedFilters}
+          onToggleFilter={toggle}
+          onClearFilters={() => setSelectedFilters([])}
+        />
+      )}
       <section className={styles.container}>
         <HomeHeroBanner onHelp={handleHelp} onLogout={handleLogout} />
 
