@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -114,6 +114,13 @@ export const HomePage = () => {
     setIsSearchState(false)
   }
 
+  const handleOverlayKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleExitSearch()
+    }
+  }
+
   const handleHelp = () => {
     console.log('help click')
   }
@@ -160,9 +167,20 @@ export const HomePage = () => {
     return () => observer.disconnect()
   }, [fetchNextPage, hasNextPage, isFetchingNextPage])
 
+  const showBackdrop = isSearchState && query.trim().length === 0
+
   return (
     <div className={styles.page}>
-      {isSearchState && <div className={styles.pageOverlay} aria-hidden="true" />}
+      {showBackdrop && (
+        <div
+          className={styles.pageOverlay}
+          role="button"
+          tabIndex={0}
+          aria-label="Exit search mode"
+          onClick={handleExitSearch}
+          onKeyDown={handleOverlayKeyDown}
+        />
+      )}
       {isSearchState ? (
         <CompactSearchBar
           visible
@@ -187,7 +205,7 @@ export const HomePage = () => {
           onClearFilters={() => setSelectedFilters([])}
         />
       )}
-      <section className={[styles.container, isSearchState ? styles.containerBlurred : ''].filter(Boolean).join(' ')}>
+      <section className={[styles.container, showBackdrop ? styles.containerBlurred : ''].filter(Boolean).join(' ')}>
         <div className={styles.wrapperLanding}>
           {!isSearchState && <HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />}
           <img
