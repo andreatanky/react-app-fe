@@ -161,7 +161,7 @@ const HomePageContent = () => {
           className={styles.pageOverlay}
           role="button"
           tabIndex={0}
-          aria-label="Exit search mode"
+          aria-label="Enter search mode"
           onClick={handleExitSearch}
           onKeyDown={handleOverlayKeyDown}
         />
