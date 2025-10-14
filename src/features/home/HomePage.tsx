@@ -2,6 +2,7 @@ import {
   FormEvent,
   KeyboardEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
 } from 'react'
@@ -17,8 +18,8 @@ import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
 import { useHomeScrollRestoration } from './ScrollRestorationProvider'
 import { HomeFilterBar } from './components/HomeFilterBar'
 import { HomeSearchInput } from './components/HomeSearchInput'
-import { useIsIntersecting } from './hooks/useIsIntersecting'
-import { useInfiniteScroll } from './hooks/useInfiniteScroll'
+import { useStickyVisibility } from './hooks/useStickyVisibility'
+import { useInfiniteScrollTrigger } from './hooks/useInfiniteScrollTrigger'
 import { useHomeSearch } from './hooks/useHomeSearch'
 import { useActiveProductsFeed } from './hooks/useActiveProductsFeed'
 import { useExpiredProducts } from './hooks/useExpiredProducts'
@@ -29,8 +30,6 @@ export const HomePage = () => {
   const { query, selectedFilters, isSearchMode, enterSearchMode, exitSearchMode } =
     useHomeSearch()
   const filterSectionRef = useRef<HTMLDivElement | null>(null)
-  const compactSearchBarRef = useRef<HTMLDivElement | null>(null)
-  const searchModeCompactBarEndRef = useRef<HTMLDivElement | null>(null)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const {
     items: activeProducts,
@@ -60,45 +59,13 @@ export const HomePage = () => {
     })
   }
 
-  const enterSearchModeWithScroll = useCallback(
-    ({ scrollToSearchSection = true } = {}) => {
-      if (isSearchMode) {
-        return
-      }
+  const handleSearchAction = useCallback(() => {
+    if (!isSearchMode) {
       enterSearchMode()
+    }
+  }, [enterSearchMode, isSearchMode])
 
-      if (!scrollToSearchSection || typeof window === 'undefined') {
-        return
-      }
-
-      const scrollToSearchBar = () => {
-        const target = searchModeCompactBarEndRef.current
-        const searchBarEl = compactSearchBarRef.current
-        if (!target || !searchBarEl) {
-          return
-        }
-
-        const searchBarHeight = searchBarEl.getBoundingClientRect().height
-        const targetTop = target.getBoundingClientRect().top + window.scrollY
-        const scrollTop = Math.max(targetTop - searchBarHeight, 0)
-
-        window.scrollTo({ top: scrollTop, behavior: 'smooth' })
-      }
-
-      window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(scrollToSearchBar)
-      })
-    },
-    [enterSearchMode, isSearchMode],
-  )
-
-  const handleSearchAction = () => {
-    enterSearchModeWithScroll()
-  }
-
-  const handleSearchInputActivate = () => {
-    enterSearchModeWithScroll({ scrollToSearchSection: false })
-  }
+  const handleSearchInputActivate = handleSearchAction
 
   const handleExitSearch = () => {
     exitSearchMode()
@@ -119,27 +86,30 @@ export const HomePage = () => {
     console.log('logout')
   }
 
-  const filterObserverOptions = useMemo<IntersectionObserverInit>(
-    () => ({ threshold: 0 }),
-    [],
-  )
-  const isFilterSectionIntersecting = useIsIntersecting(
-    filterSectionRef,
-    filterObserverOptions,
-  )
-  const showCompactNav = !isFilterSectionIntersecting
+  const showCompactNav = useStickyVisibility(filterSectionRef)
 
   const infiniteScrollObserverOptions = useMemo<IntersectionObserverInit>(
     () => ({ rootMargin: '120px' }),
     [],
   )
 
-  useInfiniteScroll(
+  const shouldFetchMore = useInfiniteScrollTrigger(
     sentinelRef,
-    fetchNextPage,
+    hasNextPage && !isFetchingNextPage,
     infiniteScrollObserverOptions,
-    !hasNextPage || isFetchingNextPage,
   )
+
+  useEffect(() => {
+    if (shouldFetchMore) {
+      fetchNextPage()
+    }
+  }, [fetchNextPage, shouldFetchMore])
+
+  useEffect(() => {
+    if (isSearchMode && typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [isSearchMode])
 
   const trimmedQuery = query.trim()
   const showBackdrop = isSearchMode && trimmedQuery.length === 0 && selectedFilters.length === 0
@@ -161,7 +131,6 @@ export const HomePage = () => {
           visible
           onSearchSubmit={submitSearch}
           onExitSearch={handleExitSearch}
-          ref={compactSearchBarRef}
         />
       ) : (
         <CompactNavBar
@@ -179,7 +148,7 @@ export const HomePage = () => {
               <span className={styles.searchModeTrail}>
                 <span className={styles.searchModeDelimiter}>&gt;</span>
                 <span className={styles.searchModeQuery}>
-                  {trimmedQuery ? `'${trimmedQuery}'` : ""}
+                  {trimmedQuery ? `'${trimmedQuery}'` : "'...'"}
                 </span>
               </span>
             </div>
@@ -202,7 +171,6 @@ export const HomePage = () => {
                   onSubmit={submitSearch}
                   onActivate={handleSearchInputActivate}
                 />
-                <div ref={searchModeCompactBarEndRef} />
                 <HomeFilterBar />
               </div>
             </div>
