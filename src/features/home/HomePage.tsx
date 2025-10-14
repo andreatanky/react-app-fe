@@ -151,7 +151,8 @@ export const HomePage = () => {
     !hasNextPage || isFetchingNextPage,
   )
 
-  const showBackdrop = isSearchMode && query.trim().length === 0 && selectedFilters.length === 0
+  const trimmedQuery = query.trim()
+  const showBackdrop = isSearchMode && trimmedQuery.length === 0 && selectedFilters.length === 0
 
   return (
     <div className={styles.page}>
@@ -166,7 +167,7 @@ export const HomePage = () => {
         />
       )}
       {isSearchMode ? (
-        <CompactSearchBar
+         <CompactSearchBar
           visible
           onSearchSubmit={submitSearch}
           onExitSearch={handleExitSearch}
@@ -181,26 +182,37 @@ export const HomePage = () => {
         />
       )}
       <section className={[styles.container, showBackdrop ? styles.containerBlurred : ''].filter(Boolean).join(' ')}>
-        <div className={styles.wrapperLanding}>
-          {!isSearchMode && <HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />}
-          <img
-            className={styles.logo}
-            src={dailyNewsLogo}
-            alt="DailyNews"
-            width={460}
-            height={56}
-          />
-        </div>
-        <div ref={filterSectionRef} className={styles.searchSectionWrapper}>
-          <div className={[styles.searchSection, isSearchMode ? styles.searchSectionHidden : ''].filter(Boolean).join(' ')}>
-            <HomeSearchInput
-              onSubmit={submitSearch}
-              onActivate={handleSearchInputActivate}
-            />
-            <div ref={searchModeCompactBarEndRef} />
-            <HomeFilterBar />
+        {isSearchMode ? (
+          <div className={styles.searchModePlaceholder}>
+            <span className={styles.searchModeBreadcrumb}>
+              All Articles
+              {trimmedQuery ? ` > '${trimmedQuery}'` : " > '...'"}
+            </span>
           </div>
-        </div>
+        ) : (
+          <>
+            <div className={styles.wrapperLanding}>
+              <HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />
+              <img
+                className={styles.logo}
+                src={dailyNewsLogo}
+                alt="DailyNews"
+                width={460}
+                height={56}
+              />
+            </div>
+            <div ref={filterSectionRef} className={styles.searchSectionWrapper}>
+              <div className={styles.searchSection}>
+                <HomeSearchInput
+                  onSubmit={submitSearch}
+                  onActivate={handleSearchInputActivate}
+                />
+                <div ref={searchModeCompactBarEndRef} />
+                <HomeFilterBar />
+              </div>
+            </div>
+          </>
+        )}
 
         <Grid
           container
