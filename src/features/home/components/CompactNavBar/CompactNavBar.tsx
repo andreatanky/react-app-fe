@@ -1,4 +1,4 @@
-import { FilterBar, type FilterItem } from '../FilterBar/FilterBar'
+import { HomeFilterBar } from '../HomeFilterBar'
 import styles from './CompactNavBar.module.css'
 import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
 
@@ -7,10 +7,6 @@ type CompactNavBarProps = {
     onSearchAction: () => void
     onHelp: () => void
     onLogout: () => void
-    filterItems: FilterItem[]
-    selectedFilters: string[]
-    onToggleFilter: (key: string) => void
-    onClearFilters?: () => void
 }
 
 export const CompactNavBar = ({
@@ -18,10 +14,6 @@ export const CompactNavBar = ({
     onSearchAction,
     onHelp,
     onLogout,
-    filterItems,
-    selectedFilters,
-    onToggleFilter,
-    onClearFilters
 }: CompactNavBarProps) => (
     <div className={[styles.container, visible ? styles.visible : ''].filter(Boolean).join(' ')}>
         <div className={styles.content}>
@@ -47,12 +39,7 @@ export const CompactNavBar = ({
 
             <hr className={styles.divider} />
             <div className={styles.bottomRow}>
-                <FilterBar
-                    items={filterItems}
-                    selectedKeys={selectedFilters}
-                    onToggle={onToggleFilter}
-                    onClear={onClearFilters}
-                />
+                <HomeFilterBar />
             </div>
         </div>
     </div>

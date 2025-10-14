@@ -31,6 +31,14 @@ export const useHomeScrollRestoration = () => {
         behavior: 'auto',
       })
     }
+    const persistedPosition = storedPosition
+
+    const position = typeof persistedPosition === 'number' ? persistedPosition : 0
+
+    window.scrollTo({
+      top: position,
+      behavior: 'auto',
+    })
   }, [shouldTrack, activeKey])
 
   useEffect(() => {

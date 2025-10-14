@@ -1,34 +1,23 @@
-import type { FormEvent } from 'react'
+import { FormEvent, forwardRef } from 'react'
 
-import { FilterBar, type FilterItem } from '../FilterBar/FilterBar'
+import { HomeFilterBar } from '../HomeFilterBar'
+import { HomeSearchInput } from '../HomeSearchInput'
 import styles from './CompactSearchBar.module.css'
-import { Searchbar } from '../../../../components/search/Searchbar';
 
 type CompactSearchBarProps = {
     visible: boolean
-    query: string
-    onQueryChange: (value: string) => void
     onSearchSubmit: (event: FormEvent) => void
-    filterItems: FilterItem[]
-    selectedFilters: string[]
-    onToggleFilter: (key: string) => void
-    onClearFilters?: () => void
     onExitSearch: () => void
 }
 
-export const CompactSearchBar = ({
+export const CompactSearchBar = forwardRef<HTMLDivElement, CompactSearchBarProps>(({
     visible,
-    query,
-    onQueryChange,
     onSearchSubmit,
-    filterItems,
-    selectedFilters,
-    onToggleFilter,
-    onClearFilters,
     onExitSearch
-}: CompactSearchBarProps) => (
+}, ref) => (
     <div
         data-compact-search-bar
+        ref={ref}
         className={[styles.container, visible ? styles.visible : '', styles.expanded].filter(Boolean).join(' ')}
     >
         <div className={styles.content}>
@@ -42,23 +31,18 @@ export const CompactSearchBar = ({
             </div>
             <hr className={styles.divider} />
             <div className={styles.searchRow}>
-                <Searchbar
-                    query={query}
-                    onQueryChange={onQueryChange}
+                <HomeSearchInput
                     onSubmit={onSearchSubmit}
                     backgroundColor="var(--color-on-surface)"
                 />
             </div>
             <div className={styles.bottomRow}>
-                <FilterBar
-                    items={filterItems}
-                    selectedKeys={selectedFilters}
-                    onToggle={onToggleFilter}
-                    onClear={onClearFilters}
-                />
+                <HomeFilterBar />
             </div>
         </div>
     </div>
-)
+))
+
+CompactSearchBar.displayName = 'CompactSearchBar'
 
 export default CompactSearchBar
