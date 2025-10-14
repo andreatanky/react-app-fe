@@ -15,7 +15,6 @@ import {
 } from '../store/authStore'
 import { ThemeProvider } from './ThemeProvider'
 import { createAppRouter } from '../router/router'
-import { ScrollRestorationProvider } from './ScrollRestorationProvider'
 
 type AppProvidersProps = {
   children?: ReactNode
@@ -54,10 +53,8 @@ export const AppProviders = ({ children }: AppProvidersProps) => {
     <ThemeProvider>
       <AuthProvider store={authStore}>
         <QueryClientProvider client={queryClient}>
-          {/* <ScrollRestorationProvider> */}
           <RouterWithContext />
           {children}
-          {/* </ScrollRestorationProvider> */}
         </QueryClientProvider>
       </AuthProvider>
     </ThemeProvider>

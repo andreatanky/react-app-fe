@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 
 import ProductCard from '../product/components/cards/ProductCard'
 import { fetchActiveProducts, fetchExpiredProducts } from '../../mocks/api/productsApi'
@@ -21,6 +22,7 @@ const ITEMS: FilterItem[] = [
 ]
 
 export const HomePage = () => {
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [selectedFilters, setSelectedFilters] = useState<string[]>([])
   const [showCompactNav, setShowCompactNav] = useState(false)
@@ -60,7 +62,13 @@ export const HomePage = () => {
   }
 
   const handleProductClick = (id: string) => {
-    console.log('product click:', id)
+    navigate({
+      to: '/reading',
+      search: (prev) => ({
+        ...prev,
+        productId: id,
+      }),
+    })
   }
 
   const handleSearchAction = () => {
