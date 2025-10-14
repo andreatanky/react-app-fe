@@ -7,9 +7,10 @@ import { fetchActiveProducts, fetchExpiredProducts } from '../../mocks/api/produ
 import { Searchbar } from '../../components/search/Searchbar'
 import styles from './HomePage.module.css'
 import { FilterBar, type FilterItem } from './components/FilterBar/FilterBar'
-import { HomeHeroBanner } from './components/HomeHeroBanner/HomeHeroBanner'
 import CompactNavBar from './components/CompactNavBar/CompactNavBar'
 import CompactSearchBar from './components/SearchMode/CompactSearchBar'
+import { HomeTopNav } from './components/HomeTopNav/HomeTopNav'
+import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
 
 const ITEMS: FilterItem[] = [
   { key: 'urgent', label: 'Urgent' },
@@ -165,18 +166,26 @@ export const HomePage = () => {
         />
       )}
       <section className={styles.container}>
-
-        <HomeHeroBanner onHelp={handleHelp} onLogout={handleLogout} />
+        <div className={styles.wrapperLanding}>
+          {!isSearchState && <HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />}
+          <img
+            className={styles.logo}
+            src={dailyNewsLogo}
+            alt="DailyNews"
+            width={460}
+            height={56}
+          />
+        </div>
         <div ref={filterSectionRef} className={styles.searchSectionWrapper}>
-          <div className={styles.searchSection}>
+          <div className={[styles.searchSection, isSearchState ? styles.searchSectionHidden : ''].filter(Boolean).join(' ')}>
             <Searchbar query={query} onQueryChange={setQuery} onSubmit={submitSearch} />
+            <div ref={searchModeCompactBarEndRef} />
             <FilterBar
               items={ITEMS}
               selectedKeys={selectedFilters}
               onToggle={toggle}
               onClear={() => setSelectedFilters([])}
             />
-            <div ref={searchModeCompactBarEndRef} />
           </div>
         </div>
 
