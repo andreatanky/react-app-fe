@@ -77,7 +77,12 @@ export const CompactNavBar = ({
             <hr className={styles.divider} />
             {isSearchState && (
                 <div className={styles.searchRow}>
-                    <Searchbar query={query} onQueryChange={onQueryChange} onSubmit={onSearchSubmit} />
+                    <Searchbar
+                        query={query}
+                        onQueryChange={onQueryChange}
+                        onSubmit={onSearchSubmit}
+                        backgroundColor="var(--color-on-surface)"
+                    />
                 </div>
             )}
             <div className={styles.bottomRow}>

@@ -7,16 +7,23 @@ export type SearchbarProps = {
     onQueryChange: (newQuery: string) => void
     onSubmit: (e: FormEvent) => void
     placeholder?: string
+    backgroundColor?: string
 }
 
-export const Searchbar = ({ query, onQueryChange, onSubmit, placeholder = "Search all article titles" }: SearchbarProps) => {
+export const Searchbar = ({
+    query,
+    onQueryChange,
+    onSubmit,
+    placeholder = "Search all article titles",
+    backgroundColor
+}: SearchbarProps) => {
 
     const submit = (e: FormEvent) => {
         e.preventDefault()
         onSubmit(e)
     }
 
-    return <form role="search" className={[styles.container].join(' ')} onSubmit={submit}>
+    return <form role="search" className={[styles.container].join(' ')} style={backgroundColor ? { background: backgroundColor } : undefined} onSubmit={submit}>
         <span className={styles.icon} aria-hidden="true">
             <img
                 className={styles.logo}
