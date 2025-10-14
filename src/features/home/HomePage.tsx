@@ -6,11 +6,9 @@ import {
   useRef,
 } from 'react'
 import Grid from '@mui/material/Grid'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 
 import ProductCard from '../product/components/cards/ProductCard'
-import { fetchActiveProducts, fetchExpiredProducts } from '../../mocks/api/productsApi'
 import styles from './HomePage.module.css'
 import CompactNavBar from './components/CompactNavBar/CompactNavBar'
 import CompactSearchBar from './components/SearchMode/CompactSearchBar'
@@ -22,6 +20,8 @@ import { HomeSearchInput } from './components/HomeSearchInput'
 import { useIsIntersecting } from './hooks/useIsIntersecting'
 import { useInfiniteScroll } from './hooks/useInfiniteScroll'
 import { useHomeSearch } from './hooks/useHomeSearch'
+import { useActiveProductsFeed } from './hooks/useActiveProductsFeed'
+import { useExpiredProducts } from './hooks/useExpiredProducts'
 
 export const HomePage = () => {
   useHomeScrollRestoration()
@@ -33,25 +33,15 @@ export const HomePage = () => {
   const searchModeCompactBarEndRef = useRef<HTMLDivElement | null>(null)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const {
-    data: activeData,
+    items: activeProducts,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isInitialLoading: isLoadingActive,
-  } = useInfiniteQuery({
-    queryKey: ['active-products'],
-    initialPageParam: 0,
-    queryFn: ({ pageParam = 0 }) => fetchActiveProducts({ pageParam }),
-    getNextPageParam: (lastPage) => lastPage.nextPage,
-  })
+    isLoading: isLoadingActive,
+  } = useActiveProductsFeed()
 
-  const { data: expiredProducts = [], isLoading: isLoadingExpired } = useQuery({
-    queryKey: ['expired-products'],
-    queryFn: fetchExpiredProducts,
-  })
-
-  const visibleActiveProducts =
-    activeData?.pages.flatMap((page) => page.items) ?? []
+  const { products: expiredProducts, isLoading: isLoadingExpired } =
+    useExpiredProducts()
 
   const submitSearch = useCallback(
     (_event: FormEvent) => {
@@ -228,7 +218,7 @@ export const HomePage = () => {
             <article className={styles.pane}>
               <h2>Active</h2>
               <div>
-                {visibleActiveProducts.map((product) => (
+                {activeProducts.map((product) => (
                   <ProductCard
                     key={product.systemDocId}
                     product={product}
