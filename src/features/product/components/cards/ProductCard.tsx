@@ -5,6 +5,7 @@ import { isDesktopOnlyProduct } from '../../../../utils/productUtils'
 import ProductCardFooter from './ProductCardFooter'
 import ProductCardHeader from './ProductCardHeader'
 import styles from './ProductCard.module.css'
+import card_background from '@/assets/images/card_background_dark.svg';
 
 type ProductCardProps = {
   product: Product
@@ -84,10 +85,10 @@ export const ProductCard = ({
       onClick={() => onProductClick(product.systemDocId)}
       onKeyDown={handleKeyDown}
     >
-      {!isExpired && !isRead ? (
+      {!expired && !isRead ? (
         <img
           className={styles.background}
-          src="card_background_dark.svg"
+          src={card_background}
           alt=""
         />
       ) : null}

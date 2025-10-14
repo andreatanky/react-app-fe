@@ -27,7 +27,10 @@ export const CompactSearchBar = ({
     onClearFilters,
     onExitSearch
 }: CompactSearchBarProps) => (
-    <div className={[styles.container, visible ? styles.visible : '', styles.expanded].filter(Boolean).join(' ')}>
+    <div
+        data-compact-search-bar
+        className={[styles.container, visible ? styles.visible : '', styles.expanded].filter(Boolean).join(' ')}
+    >
         <div className={styles.content}>
             <div className={[styles.topRow, styles.topRowSearch].join(' ')}>
                 <button
@@ -43,7 +46,7 @@ export const CompactSearchBar = ({
                     query={query}
                     onQueryChange={onQueryChange}
                     onSubmit={onSearchSubmit}
-                    backgroundColor="var(--color-surface)"
+                    backgroundColor="var(--color-on-surface)"
                 />
             </div>
             <div className={styles.bottomRow}>

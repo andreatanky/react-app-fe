@@ -25,6 +25,7 @@ export const HomePage = () => {
   const [showCompactNav, setShowCompactNav] = useState(false)
   const [isSearchState, setIsSearchState] = useState(false)
   const filterSectionRef = useRef<HTMLDivElement | null>(null)
+  const searchModeCompactBarEndRef = useRef<HTMLDivElement | null>(null)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const {
     data: activeData,
@@ -62,10 +63,29 @@ export const HomePage = () => {
   }
 
   const handleSearchAction = () => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
     setIsSearchState(true)
+
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const scrollToSearchBar = () => {
+      const target = searchModeCompactBarEndRef.current
+      const searchBarEl = document.querySelector<HTMLElement>('[data-compact-search-bar]')
+      if (!target || !searchBarEl) {
+        return
+      }
+
+      const searchBarHeight = searchBarEl.getBoundingClientRect().height
+      const targetTop = target.getBoundingClientRect().top + window.scrollY
+      const scrollTop = Math.max(targetTop - searchBarHeight, 0)
+
+      window.scrollTo({ top: scrollTop, behavior: 'smooth' })
+    }
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(scrollToSearchBar)
+    })
   }
 
   const handleExitSearch = () => {
@@ -145,8 +165,8 @@ export const HomePage = () => {
         />
       )}
       <section className={styles.container}>
-        <HomeHeroBanner onHelp={handleHelp} onLogout={handleLogout} />
 
+        <HomeHeroBanner onHelp={handleHelp} onLogout={handleLogout} />
         <div ref={filterSectionRef} className={styles.searchSectionWrapper}>
           <div className={styles.searchSection}>
             <Searchbar query={query} onQueryChange={setQuery} onSubmit={submitSearch} />
@@ -156,6 +176,7 @@ export const HomePage = () => {
               onToggle={toggle}
               onClear={() => setSelectedFilters([])}
             />
+            <div ref={searchModeCompactBarEndRef} />
           </div>
         </div>
 
