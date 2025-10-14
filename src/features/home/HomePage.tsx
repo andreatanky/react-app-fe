@@ -8,7 +8,7 @@ import { Searchbar } from '../../components/search/Searchbar'
 import styles from './HomePage.module.css'
 import { FilterBar, type FilterItem } from './components/FilterBar/FilterBar'
 import { HomeHeroBanner } from './components/HomeHeroBanner/HomeHeroBanner'
-import CompactNavBar from './components/CompactNavBar/CompactNavBar'
+import CompactBar from './components/CompactBar/CompactBar'
 
 const ITEMS: FilterItem[] = [
   { key: 'urgent', label: 'Urgent' },
@@ -20,8 +20,9 @@ const ITEMS: FilterItem[] = [
 
 export const HomePage = () => {
   const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState<string[]>([])
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([])
   const [showCompactNav, setShowCompactNav] = useState(false)
+  const [isSearchState, setIsSearchState] = useState(false)
   const filterSectionRef = useRef<HTMLDivElement | null>(null)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -46,11 +47,11 @@ export const HomePage = () => {
     activeData?.pages.flatMap((page) => page.items) ?? []
 
   const submitSearch = (_event: FormEvent) => {
-    console.log('search submit:', query, selected)
+    console.log('search submit:', query, selectedFilters)
   }
 
   const toggle = (key: string) => {
-    setSelected((prev) =>
+    setSelectedFilters((prev) =>
       prev.includes(key) ? prev.filter((value) => value !== key) : [...prev, key],
     )
   }
@@ -60,7 +61,8 @@ export const HomePage = () => {
   }
 
   const handleSearchAction = () => {
-    filterSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    // filterSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setIsSearchState(true)
   }
 
   const handleHelp = () => {
@@ -111,7 +113,7 @@ export const HomePage = () => {
 
   return (
     <div className={styles.page}>
-      <CompactNavBar
+      <CompactBar
         visible={showCompactNav}
         onSearchAction={handleSearchAction}
         onHelp={handleHelp}
@@ -120,9 +122,11 @@ export const HomePage = () => {
         onQueryChange={setQuery}
         onSearchSubmit={submitSearch}
         filterItems={ITEMS}
-        selectedFilters={selected}
+        selectedFilters={selectedFilters}
         onToggleFilter={toggle}
-        onClearFilters={() => setSelected([])}
+        onClearFilters={() => setSelectedFilters([])}
+        isSearchState={isSearchState}
+        setIsSearchState={setIsSearchState}
       />
       <section className={styles.container}>
         <HomeHeroBanner onHelp={handleHelp} onLogout={handleLogout} />
@@ -132,9 +136,9 @@ export const HomePage = () => {
             <Searchbar query={query} onQueryChange={setQuery} onSubmit={submitSearch} />
             <FilterBar
               items={ITEMS}
-              selectedKeys={selected}
+              selectedKeys={selectedFilters}
               onToggle={toggle}
-              onClear={() => setSelected([])}
+              onClear={() => setSelectedFilters([])}
             />
           </div>
         </div>
