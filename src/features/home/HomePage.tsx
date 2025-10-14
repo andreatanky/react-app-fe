@@ -73,10 +73,13 @@ export const HomePage = () => {
     })
   }
 
-  const handleSearchAction = () => {
+  const enterSearchMode = ({ scrollToSearchSection = true } = {}) => {
+    if (isSearchState) {
+      return
+    }
     setIsSearchState(true)
 
-    if (typeof window === 'undefined') {
+    if (!scrollToSearchSection || typeof window === 'undefined') {
       return
     }
 
@@ -97,6 +100,14 @@ export const HomePage = () => {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(scrollToSearchBar)
     })
+  }
+
+  const handleSearchAction = () => {
+    enterSearchMode()
+  }
+
+  const handleSearchInputActivate = () => {
+    enterSearchMode({ scrollToSearchSection: false })
   }
 
   const handleExitSearch = () => {
@@ -189,7 +200,12 @@ export const HomePage = () => {
         </div>
         <div ref={filterSectionRef} className={styles.searchSectionWrapper}>
           <div className={[styles.searchSection, isSearchState ? styles.searchSectionHidden : ''].filter(Boolean).join(' ')}>
-            <Searchbar query={query} onQueryChange={setQuery} onSubmit={submitSearch} />
+            <Searchbar
+              query={query}
+              onQueryChange={setQuery}
+              onSubmit={submitSearch}
+              onActivate={handleSearchInputActivate}
+            />
             <div ref={searchModeCompactBarEndRef} />
             <FilterBar
               items={ITEMS}

@@ -8,6 +8,7 @@ export type SearchbarProps = {
     onSubmit: (e: FormEvent) => void
     placeholder?: string
     backgroundColor?: string
+    onActivate?: () => void
 }
 
 export const Searchbar = ({
@@ -15,12 +16,17 @@ export const Searchbar = ({
     onQueryChange,
     onSubmit,
     placeholder = "Search all article titles",
-    backgroundColor
+    backgroundColor,
+    onActivate
 }: SearchbarProps) => {
 
     const submit = (e: FormEvent) => {
         e.preventDefault()
         onSubmit(e)
+    }
+
+    const handleActivate = () => {
+        onActivate?.()
     }
 
     return <form role="search" className={[styles.container].join(' ')} style={backgroundColor ? { background: backgroundColor } : undefined} onSubmit={submit}>
@@ -34,6 +40,8 @@ export const Searchbar = ({
         <input
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
+            onFocus={handleActivate}
+            onClick={handleActivate}
             className={styles.input}
             type="search"
             placeholder={placeholder}
