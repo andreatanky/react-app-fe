@@ -151,7 +151,7 @@ export const HomePage = () => {
     !hasNextPage || isFetchingNextPage,
   )
 
-  const showBackdrop = isSearchMode && query.trim().length === 0
+  const showBackdrop = isSearchMode && query.trim().length === 0 && selectedFilters.length === 0
 
   return (
     <div className={styles.page}>

@@ -30,7 +30,7 @@ export const useHomeSearchStore = create<HomeSearchState & HomeSearchActions>()(
         })),
       clearFilters: () => set({ selectedFilters: [] }),
       enterSearchMode: () => set({ isSearchMode: true }),
-      exitSearchMode: () => set({ isSearchMode: false }),
+      exitSearchMode: () => set({ isSearchMode: false, query: '', selectedFilters: [] }),
     }),
     {
       name: 'home-search', // storage key
