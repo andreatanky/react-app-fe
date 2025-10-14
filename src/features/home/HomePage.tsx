@@ -12,6 +12,7 @@ import CompactNavBar from './components/CompactNavBar/CompactNavBar'
 import CompactSearchBar from './components/SearchMode/CompactSearchBar'
 import { HomeTopNav } from './components/HomeTopNav/HomeTopNav'
 import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
+import { useHomeScrollRestoration } from './ScrollRestorationProvider'
 
 const ITEMS: FilterItem[] = [
   { key: 'urgent', label: 'Urgent' },
@@ -22,6 +23,7 @@ const ITEMS: FilterItem[] = [
 ]
 
 export const HomePage = () => {
+  useHomeScrollRestoration()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [selectedFilters, setSelectedFilters] = useState<string[]>([])
