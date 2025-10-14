@@ -7,6 +7,6 @@ export const useInfiniteScrollTrigger = (
   enabled: boolean,
   options?: IntersectionObserverInit,
 ) => {
-  const isIntersecting = useIsIntersecting(sentinelRef, options)
+  const isIntersecting = useIsIntersecting(sentinelRef, options, enabled)
   return useMemo(() => enabled && isIntersecting, [enabled, isIntersecting])
 }

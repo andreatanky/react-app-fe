@@ -86,7 +86,15 @@ export const HomePage = () => {
     console.log('logout')
   }
 
-  const showCompactNav = useStickyVisibility(filterSectionRef)
+  const stickyObserverOptions = useMemo<IntersectionObserverInit>(
+    () => ({ threshold: 0 }),
+    [],
+  )
+  const showCompactNav = useStickyVisibility(
+    filterSectionRef,
+    !isSearchMode,
+    stickyObserverOptions,
+  )
 
   const infiniteScrollObserverOptions = useMemo<IntersectionObserverInit>(
     () => ({ rootMargin: '120px' }),

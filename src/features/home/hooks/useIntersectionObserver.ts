@@ -6,11 +6,16 @@ export const useIntersectionObserver = (
   targetRef: MutableRefObject<Element | null>,
   callback: IntersectionObserverCallback,
   options?: IntersectionOptions,
+  enabled = true,
 ) => {
   useEffect(() => {
+    if (!enabled) {
+      return undefined
+    }
+
     const element = targetRef.current
     if (!element) {
-      return
+      return undefined
     }
 
     const observer = new IntersectionObserver(callback, options)
@@ -19,5 +24,5 @@ export const useIntersectionObserver = (
     return () => {
       observer.disconnect()
     }
-  }, [callback, options, targetRef])
+  }, [callback, enabled, options, targetRef])
 }
