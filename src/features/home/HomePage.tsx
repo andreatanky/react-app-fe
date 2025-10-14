@@ -141,6 +141,7 @@ export const HomePage = () => {
 
   return (
     <div className={styles.page}>
+      {isSearchState && <div className={styles.pageOverlay} aria-hidden="true" />}
       {isSearchState ? (
         <CompactSearchBar
           visible
@@ -165,7 +166,7 @@ export const HomePage = () => {
           onClearFilters={() => setSelectedFilters([])}
         />
       )}
-      <section className={styles.container}>
+      <section className={[styles.container, isSearchState ? styles.containerBlurred : ''].filter(Boolean).join(' ')}>
         <div className={styles.wrapperLanding}>
           {!isSearchState && <HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />}
           <img

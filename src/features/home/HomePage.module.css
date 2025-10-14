@@ -7,6 +7,7 @@
   max-width: var(--home-page-max);
   margin: 0 auto;
   padding: 0 var(--home-page-gutter) 3rem;
+  position: relative;
 }
 
 .container {
@@ -26,6 +27,20 @@
 .searchSectionHidden {
   visibility: hidden;
   pointer-events: none;
+}
+
+.containerBlurred {
+  filter: blur(6px);
+  transition: filter 0.25s ease;
+}
+
+.pageOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  z-index: 60;
 }
 
 .panes {
