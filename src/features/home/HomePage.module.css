@@ -85,14 +85,36 @@
 }
 
 .searchModePlaceholder {
-  min-height: clamp(160px, 25vh, 280px);
+  min-height: clamp(150px, 100vh, 250px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 0.75rem;
+  padding-bottom: 1.5rem;
 }
 
 .searchModeBreadcrumb {
-  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 1rem;
+}
+
+.searchModeRoot {
+  color: var(--color-on-surface);
+  font-weight: 600;
+}
+
+.searchModeTrail {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.searchModeDelimiter {
+  color: var(--color-on-surface-variant);
+  font-weight: 500;
+}
+
+.searchModeQuery {
   color: var(--color-on-surface-variant);
 }

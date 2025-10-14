@@ -184,10 +184,15 @@ export const HomePage = () => {
       <section className={[styles.container, showBackdrop ? styles.containerBlurred : ''].filter(Boolean).join(' ')}>
         {isSearchMode ? (
           <div className={styles.searchModePlaceholder}>
-            <span className={styles.searchModeBreadcrumb}>
-              All Articles
-              {trimmedQuery ? ` > '${trimmedQuery}'` : " > '...'"}
-            </span>
+            <div className={styles.searchModeBreadcrumb}>
+              <span className={styles.searchModeRoot}>All Articles</span>
+              <span className={styles.searchModeTrail}>
+                <span className={styles.searchModeDelimiter}>&gt;</span>
+                <span className={styles.searchModeQuery}>
+                  {trimmedQuery ? `'${trimmedQuery}'` : ""}
+                </span>
+              </span>
+            </div>
           </div>
         ) : (
           <>
