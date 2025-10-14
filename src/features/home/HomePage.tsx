@@ -19,12 +19,11 @@ import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
 import { useHomeScrollRestoration } from './ScrollRestorationProvider'
 import { HomeFilterBar } from './components/HomeFilterBar'
 import { HomeSearchInput } from './components/HomeSearchInput'
-import { useHomeSearch } from './providers/HomeSearchProvider'
 import { useIsIntersecting } from './hooks/useIsIntersecting'
 import { useInfiniteScroll } from './hooks/useInfiniteScroll'
-import { HomeSearchProvider } from './providers/HomeSearchProvider'
+import { useHomeSearch } from './hooks/useHomeSearch'
 
-const HomePageContent = () => {
+export const HomePage = () => {
   useHomeScrollRestoration()
   const navigate = useNavigate()
   const { query, selectedFilters, isSearchMode, enterSearchMode, exitSearchMode } =
@@ -161,7 +160,7 @@ const HomePageContent = () => {
           className={styles.pageOverlay}
           role="button"
           tabIndex={0}
-          aria-label="Enter search mode"
+          aria-label="Exit search mode"
           onClick={handleExitSearch}
           onKeyDown={handleOverlayKeyDown}
         />
@@ -252,9 +251,3 @@ const HomePageContent = () => {
     </div>
   )
 }
-
-export const HomePage = () => (
-  <HomeSearchProvider>
-    <HomePageContent />
-  </HomeSearchProvider>
-)

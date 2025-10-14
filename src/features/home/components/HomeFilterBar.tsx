@@ -1,5 +1,5 @@
 import { FilterBar } from './FilterBar/FilterBar'
-import { useHomeSearch } from '../providers/HomeSearchProvider'
+import { useHomeSearch } from '../hooks/useHomeSearch'
 import { HOME_FILTERS } from '../constants'
 
 type HomeFilterBarProps = {

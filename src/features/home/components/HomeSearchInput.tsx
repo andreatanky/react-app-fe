@@ -1,6 +1,6 @@
 import { Searchbar, type SearchbarProps } from '../../../components/search/Searchbar'
 
-import { useHomeSearch } from '../providers/HomeSearchProvider'
+import { useHomeSearch } from '../hooks/useHomeSearch'
 
 type HomeSearchInputProps = Omit<SearchbarProps, 'query' | 'onQueryChange'>
 
