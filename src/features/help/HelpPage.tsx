@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import styled from '@emotion/styled'
 
 const Container = styled('section')(({ theme }) => ({
   display: 'grid',

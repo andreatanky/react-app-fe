@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import styled from '@emotion/styled'
 
 export const Bar = styled('div')(({ theme }) => ({
   display: 'flex',

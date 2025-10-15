@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react'
-import { styled, type CSSObject } from '@mui/material/styles'
+import styled from '@emotion/styled'
+import type { CSSObject } from '@emotion/react'
 
 type PillStyleProps = {
   selected?: boolean

@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { styled } from '@mui/material/styles'
+import styled from '@emotion/styled'
 
 const Root = styled('div')(({ theme }) => ({
   minHeight: '100vh',

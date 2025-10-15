@@ -1,4 +1,5 @@
-import { alpha, styled } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
+import styled from '@emotion/styled'
 
 export const PageOverlay = styled('div')(({ theme }) => ({
   position: 'fixed',

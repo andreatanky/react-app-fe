@@ -3,8 +3,8 @@ import { type ReactNode } from 'react'
 import Label from '../../../../components/labels/Label'
 import PieChart from '../../../../components/piechart/PieChart'
 import styles from './ProductCard.module.css'
-import interpunct from '@/assets/icons/interpunct.svg';
-import task_read from '@/assets/icons/task_alt.svg';
+import interpunct from '@/assets/icons/interpunct.svg'
+import task_read from '@/assets/icons/task_alt.svg'
 
 type ProductCardFooterProps = {
   showDesktopLabel: boolean
@@ -63,10 +63,10 @@ export const ProductCardFooter = ({
     <div className={styles.footer}>
       {showDesktopLabel ? (
         <Label
+          className={styles.desktopOnlyLabel}
           text="Desktop Only"
           backgroundColor="var(--color-on-surface-variant)"
           textColor="var(--color-surface)"
-          className={styles.desktopOnlyLabel}
         />
       ) : null}
 

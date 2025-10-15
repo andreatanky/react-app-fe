@@ -1,4 +1,5 @@
-import { styled } from '@mui/material/styles'
+import styled from '@emotion/styled'
+
 
 export const StyledContainer = styled('section', {
   shouldForwardProp: (prop) => prop !== 'blurred',
@@ -19,7 +20,7 @@ export const WrapperLanding = styled('div')(({ theme }) => ({
   color: theme.palette.surface.on,
 }))
 
-export const Logo = styled('img')(() => ({
+export const Logo = styled('img')({
   display: 'block',
   width: 'min(100%, 460px)',
   maxWidth: 460,
@@ -27,7 +28,7 @@ export const Logo = styled('img')(() => ({
   height: 'auto',
   objectFit: 'contain',
   margin: '0 auto',
-}))
+})
 
 export const SearchSectionWrapper = styled('div')(() => ({
   width: '100%',

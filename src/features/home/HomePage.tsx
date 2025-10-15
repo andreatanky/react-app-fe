@@ -30,12 +30,7 @@ import {
   Logo,
   SearchSectionWrapper,
   SearchSection,
-  SearchModePlaceholder,
-  SearchModeBreadcrumb,
-  SearchModeRoot,
-  SearchModeTrail,
-  SearchModeDelimiter,
-  SearchModeQuery,
+  SearchModePlaceholder
 } from './styled/layout'
 import { Pane, Panes, LazyStatus } from './styled/feeds'
 import { PageOverlay } from './styled/overlay'

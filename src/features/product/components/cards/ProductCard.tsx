@@ -5,7 +5,7 @@ import { isDesktopOnlyProduct } from '../../../../utils/productUtils'
 import ProductCardFooter from './ProductCardFooter'
 import ProductCardHeader from './ProductCardHeader'
 import styles from './ProductCard.module.css'
-import card_background from '@/assets/images/card_background_dark.svg';
+import card_background from '@/assets/images/card_background_dark.svg'
 
 type ProductCardProps = {
   product: Product
@@ -27,7 +27,7 @@ const formatDate = (raw: string) => {
 }
 
 const pluralise = (value: number, unit: string) =>
-  `${value} ${unit}${value === 1 ? '' : 's'}`;
+  `${value} ${unit}${value === 1 ? '' : 's'}`
 
 const isExpired = (rawExpiry: string) => {
   const parsed = Date.parse(rawExpiry)
@@ -84,6 +84,7 @@ export const ProductCard = ({
       className={cardClasses.join(' ')}
       onClick={() => onProductClick(product.systemDocId)}
       onKeyDown={handleKeyDown}
+      tabIndex={0}
     >
       {!expired && !isRead ? (
         <img

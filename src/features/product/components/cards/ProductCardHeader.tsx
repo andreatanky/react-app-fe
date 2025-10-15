@@ -1,6 +1,6 @@
 import Label from '../../../../components/labels/Label'
 import styles from './ProductCard.module.css'
-import interpunct from '@/assets/icons/interpunct.svg';
+import interpunct from '@/assets/icons/interpunct.svg'
 
 type ProductCardHeaderProps = {
   publishedDisplay: string | null

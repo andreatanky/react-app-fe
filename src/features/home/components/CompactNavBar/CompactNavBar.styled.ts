@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
+import styled from '@emotion/styled'
 
 export const Container = styled('div', {
   shouldForwardProp: (prop) => prop !== 'visible',

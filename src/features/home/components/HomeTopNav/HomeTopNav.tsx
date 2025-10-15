@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react'
-import { Container, Left, Actions, ActionButton } from './HomeTopNav.styled'
+import { Container, Spacer, Actions, ActionButton } from './HomeTopNav.styled'
 
 type HomeTopNavProps = {
     onHelp: () => void
@@ -10,7 +10,7 @@ export const HomeTopNav = ({ onHelp, onLogout }: HomeTopNavProps) => {
     return (
         <nav role="navigation" aria-label="Home top navigation">
             <Container>
-                <Left />
+                <Spacer />
                 <Actions>
                     <ActionButton type="button" color="inherit" onClick={onHelp} aria-label="Help">
                         Help

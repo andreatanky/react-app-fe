@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
+import styled from '@emotion/styled'
 
 export const Container = styled('div')(({ theme }) => ({
   height: theme.spacing(7),
@@ -8,7 +8,7 @@ export const Container = styled('div')(({ theme }) => ({
   alignItems: 'center',
 }))
 
-export const Left = styled('div')(() => ({
+export const Spacer = styled('div')(() => ({
   flex: 1,
 }))
 
