@@ -1,47 +1,68 @@
+import styled from '@emotion/styled'
 import Label from '../../../../components/labels/Label'
-import styles from './ProductCard.module.css'
 import interpunct from '@/assets/icons/interpunct.svg'
 
-type ProductCardHeaderProps = {
-  publishedDisplay: string | null
-  expired: boolean
-  isUrgent: boolean
-}
+const MetaRow = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  color: var(--color-on-surface-variant);
+  font-size: 0.9rem;
+`
+
+const MetaItem = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+`
+
+const Separator = styled.img`
+  width: 4px;
+  height: 4px;
+  margin-top: 4px;
+`
+
+const Spacer = styled.span`
+  flex: 1;
+  min-width: 1rem;
+`
+
+const Badges = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`
 
 export const ProductCardHeader = ({
   publishedDisplay,
   expired,
   isUrgent,
-}: ProductCardHeaderProps) => (
-  <div className={styles.metaRow}>
-    {publishedDisplay ? (
+}: {
+  publishedDisplay: string | null
+  expired: boolean
+  isUrgent: boolean
+}) => (
+  <MetaRow>
+    {publishedDisplay && (
       <>
-        <span className={styles.metaItem}>Published {publishedDisplay}</span>
-        <img
-          className={styles.separator}
-          src={interpunct}
-          alt=""
-          aria-hidden="true"
-        />
+        <MetaItem>Published {publishedDisplay}</MetaItem>
+        <Separator src={interpunct} alt="" aria-hidden="true" />
       </>
-    ) : null}
+    )}
 
-    <span className={styles.metaItem}>
-      {expired ? 'Expired' : 'Expires in 4 days'}
-    </span>
-
-    <span className={styles.spacer} />
-
-    <div className={styles.badges}>
-      {isUrgent ? (
+    <MetaItem>{expired ? 'Expired' : 'Expires in 4 days'}</MetaItem>
+    <Spacer />
+    <Badges>
+      {isUrgent && (
         <Label
           text="Urgent"
           backgroundColor="var(--color-secondary)"
           textColor="var(--color-on-primary, #0f172a)"
         />
-      ) : null}
-    </div>
-  </div>
+      )}
+    </Badges>
+  </MetaRow>
 )
 
 export default ProductCardHeader

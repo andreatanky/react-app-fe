@@ -1,17 +1,85 @@
+import styled from '@emotion/styled'
 import type { KeyboardEvent } from 'react'
-
 import { Product } from '../../models/Product'
 import { isDesktopOnlyProduct } from '../../../../utils/productUtils'
 import ProductCardFooter from './ProductCardFooter'
 import ProductCardHeader from './ProductCardHeader'
-import styles from './ProductCard.module.css'
 import card_background from '@/assets/images/card_background_dark.svg'
 
-type ProductCardProps = {
-  product: Product
-  onProductClick: (id: string) => void
-  className?: string
-}
+// ========================
+// Styled Components (Emotion)
+// ========================
+
+const Card = styled.article`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--color-outline);
+  color: var(--color-on-surface, #ffffff);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &.read {
+    background: var(--color-surface);
+  }
+
+  &.unread {
+    background: var(--color-surface-bright);
+    border-left: 4px solid var(--color-outline);
+  }
+
+  &.expired {
+    background: var(--color-surface-container);
+    border-left: none;
+    border-right: none;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+`
+
+const Background = styled.img`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: auto;
+  max-width: 55%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+`
+
+const Content = styled.div`
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`
+
+const Title = styled.h3`
+  margin: 0;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  line-height: 1.35;
+  color: var(--color-on-surface, #ffffff);
+  font-weight: 400;
+
+  &.titleClamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+`
+
+// ========================
+// Logic
+// ========================
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   month: 'short',
@@ -20,9 +88,7 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 
 const formatDate = (raw: string) => {
   const parsed = Date.parse(raw)
-  if (Number.isNaN(parsed)) {
-    return null
-  }
+  if (Number.isNaN(parsed)) return null
   return dateFormatter.format(new Date(parsed))
 }
 
@@ -47,7 +113,11 @@ export const ProductCard = ({
   product,
   onProductClick,
   className,
-}: ProductCardProps) => {
+}: {
+  product: Product
+  onProductClick: (id: string) => void
+  className?: string
+}) => {
   const publishedDisplay = formatDate(product.publishedDate)
   const progressPercent = getProgressPercent(product.readProgress)
   const readDurationLabel = pluralise(product.readingDuration, 'minute')
@@ -63,46 +133,25 @@ export const ProductCard = ({
     }
   }
 
-  const cardClasses = [styles.card]
-  if (expired) {
-    cardClasses.push(styles.expired)
-  } else if (isRead) {
-    cardClasses.push(styles.read)
-  } else {
-    cardClasses.push(styles.unread)
-  }
-
-  if (className) cardClasses.push(className)
-
-  const titleClasses = [styles.title]
-  if (expired) {
-    titleClasses.push(styles.titleClamp)
-  }
+  const statusClass = expired ? 'expired' : isRead ? 'read' : 'unread'
+  const titleClass = expired ? 'titleClamp' : ''
 
   return (
-    <article
-      className={cardClasses.join(' ')}
+    <Card
+      className={`${statusClass} ${className ?? ''}`}
       onClick={() => onProductClick(product.systemDocId)}
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
-      {!expired && !isRead ? (
-        <img
-          className={styles.background}
-          src={card_background}
-          alt=""
-        />
-      ) : null}
+      {!expired && !isRead && <Background src={card_background} alt="" />}
 
-      <div className={styles.content}>
+      <Content>
         <ProductCardHeader
           publishedDisplay={publishedDisplay}
           expired={expired}
           isUrgent={product.isUrgent}
         />
-
-        <h3 className={titleClasses.join(' ')}>{product.title}</h3>
-
+        <Title className={titleClass}>{product.title}</Title>
         <ProductCardFooter
           showDesktopLabel={showDesktopLabel}
           isRead={isRead}
@@ -110,8 +159,8 @@ export const ProductCard = ({
           readDurationLabel={readDurationLabel}
           pieChartDegrees={pieChartDegrees}
         />
-      </div>
-    </article>
+      </Content>
+    </Card>
   )
 }
 

@@ -1,18 +1,43 @@
+import styled from '@emotion/styled'
 import { type ReactNode } from 'react'
-
 import Label from '../../../../components/labels/Label'
 import PieChart from '../../../../components/piechart/PieChart'
-import styles from './ProductCard.module.css'
 import interpunct from '@/assets/icons/interpunct.svg'
 import task_read from '@/assets/icons/task_alt.svg'
 
-type ProductCardFooterProps = {
-  showDesktopLabel: boolean
-  isRead: boolean
-  progressPercent: number
-  readDurationLabel: string
-  pieChartDegrees: number[]
-}
+const Footer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--color-on-surface-variant);
+  font-size: 0.9rem;
+`
+
+const ReadStatusContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+`
+
+const FooterItem = styled.span`
+  display: inline-flex;
+  align-items: center;
+`
+
+const Separator = styled.img`
+  width: 4px;
+  height: 4px;
+  margin-top: 4px;
+`
+
+const Icon = styled.img`
+  width: 18px;
+  height: 18px;
+`
+
+const DesktopOnlyLabel = styled(Label)`
+  margin-right: 0.5rem;
+`
 
 export const ProductCardFooter = ({
   showDesktopLabel,
@@ -20,64 +45,50 @@ export const ProductCardFooter = ({
   progressPercent,
   readDurationLabel,
   pieChartDegrees,
-}: ProductCardFooterProps) => {
+}: {
+  showDesktopLabel: boolean
+  isRead: boolean
+  progressPercent: number
+  readDurationLabel: string
+  pieChartDegrees: number[]
+}) => {
   const segments: ReactNode[] = []
 
   if (!isRead) {
     segments.push(
-      <span className={styles.metaItem} key="status-unread">
-        <span>Unread</span>
-      </span>,
+      <span key="status-unread">Unread</span>
     )
   } else if (progressPercent >= 100) {
     segments.push(
-      <span className={styles.metaItem} key="status-read">
-        <img className={styles.icon} src={task_read} alt="Complete" />
+      <>
+        <Icon src={task_read} alt="Complete" />
         <span>Read</span>
-      </span>,
+      </>
     )
   } else {
     segments.push(
-      <span className={styles.metaItem} key="status-progress">
+      <>
         <PieChart degrees={pieChartDegrees} />
         <span>In Progress</span>
-      </span>,
+      </>
     )
   }
 
-  segments.push(
-    <img
-      className={styles.separator}
-      src={interpunct}
-      alt=""
-      aria-hidden="true"
-    />
-  )
-  segments.push(
-    <span key="duration">
-      {readDurationLabel}
-    </span>,
-  )
-
   return (
-    <div className={styles.footer}>
-      {showDesktopLabel ? (
-        <Label
-          className={styles.desktopOnlyLabel}
+    <Footer>
+      {showDesktopLabel && (
+        <DesktopOnlyLabel
           text="Desktop Only"
           backgroundColor="var(--color-on-surface-variant)"
           textColor="var(--color-surface)"
         />
-      ) : null}
-
-      <div className={styles.readStatusContainer}>
-        {segments.map((segment, index) => (
-          <span className={styles.footerItem} key={index}>
-            {segment}
-          </span>
-        ))}
-      </div>
-    </div>
+      )}
+      <ReadStatusContainer>
+        <FooterItem>{segments}</FooterItem>
+        <Separator src={interpunct} alt="" aria-hidden="true" />
+        <FooterItem>{readDurationLabel}</FooterItem>
+      </ReadStatusContainer>
+    </Footer>
   )
 }
 
