@@ -10,11 +10,10 @@ import Grid from '@mui/material/Grid'
 import { useNavigate } from '@tanstack/react-router'
 
 import ProductCard from '../product/components/cards/ProductCard'
-import styles from './HomePage.module.css'
 import CompactNavBar from './components/CompactNavBar/CompactNavBar'
 import CompactSearchBar from './components/SearchMode/CompactSearchBar'
 import { HomeTopNav } from './components/HomeTopNav/HomeTopNav'
-import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
+import dailyNewsLogo from '@/assets/images/dailynews_logo.png'
 import { useHomeScrollRestoration } from './ScrollRestorationProvider'
 import { HomeFilterBar } from './components/HomeFilterBar'
 import { HomeSearchInput } from './components/HomeSearchInput'
@@ -23,6 +22,22 @@ import { useInfiniteScrollTrigger } from './hooks/useInfiniteScrollTrigger'
 import { useHomeSearch } from './hooks/useHomeSearch'
 import { useActiveProductsFeed } from './hooks/useActiveProductsFeed'
 import { useExpiredProducts } from './hooks/useExpiredProducts'
+import { Page } from './styled/Page'
+import {
+  StyledContainer,
+  WrapperLanding,
+  Logo,
+  SearchSectionWrapper,
+  SearchSection,
+  SearchModePlaceholder,
+  SearchModeBreadcrumb,
+  SearchModeRoot,
+  SearchModeTrail,
+  SearchModeDelimiter,
+  SearchModeQuery,
+} from './styled/layout'
+import { Pane, Panes, LazyStatus } from './styled/feeds'
+import { PageOverlay } from './styled/overlay'
 
 export const HomePage = () => {
   useHomeScrollRestoration()
@@ -123,10 +138,9 @@ export const HomePage = () => {
   const showBackdrop = isSearchMode && trimmedQuery.length === 0 && selectedFilters.length === 0
 
   return (
-    <div className={styles.page}>
+    <Page>
       {showBackdrop && (
-        <div
-          className={styles.pageOverlay}
+        <PageOverlay
           role="button"
           tabIndex={0}
           aria-label="Exit search mode"
@@ -148,50 +162,40 @@ export const HomePage = () => {
           onLogout={handleLogout}
         />
       )}
-      <section className={[styles.container, showBackdrop ? styles.containerBlurred : ''].filter(Boolean).join(' ')}>
+      <StyledContainer blurred={showBackdrop}>
         {isSearchMode ? (
-          <div className={styles.searchModePlaceholder}>
-            <div className={styles.searchModeBreadcrumb}>
-              <span className={styles.searchModeRoot}>All Articles</span>
-              <span className={styles.searchModeTrail}>
-                <span className={styles.searchModeDelimiter}>&gt;</span>
-                <span className={styles.searchModeQuery}>
+          <SearchModePlaceholder>
+            <SearchModeBreadcrumb>
+              <SearchModeRoot>All Articles</SearchModeRoot>
+              <SearchModeTrail>
+                <SearchModeDelimiter>&gt;</SearchModeDelimiter>
+                <SearchModeQuery>
                   {trimmedQuery ? `'${trimmedQuery}'` : "'...'"}
-                </span>
-              </span>
-            </div>
-          </div>
+                </SearchModeQuery>
+              </SearchModeTrail>
+            </SearchModeBreadcrumb>
+          </SearchModePlaceholder>
         ) : (
           <>
-            <div className={styles.wrapperLanding}>
+            <WrapperLanding>
               <HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />
-              <img
-                className={styles.logo}
-                src={dailyNewsLogo}
-                alt="DailyNews"
-                width={460}
-                height={56}
-              />
-            </div>
-            <div ref={filterSectionRef} className={styles.searchSectionWrapper}>
-              <div className={styles.searchSection}>
+              <Logo src={dailyNewsLogo} alt="DailyNews" width={460} height={56} />
+            </WrapperLanding>
+            <SearchSectionWrapper ref={filterSectionRef}>
+              <SearchSection>
                 <HomeSearchInput
                   onSubmit={submitSearch}
                   onActivate={handleSearchInputActivate}
                 />
                 <HomeFilterBar />
-              </div>
-            </div>
+              </SearchSection>
+            </SearchSectionWrapper>
           </>
         )}
 
-        <Grid
-          container
-          spacing={3}
-          className={styles.panes}
-        >
+        <Panes container spacing={3}>
           <Grid size={{ xs: 12, md: 8 }}>
-            <article className={styles.pane}>
+            <Pane>
               <h2>Active</h2>
               <div>
                 {activeProducts.map((product) => (
@@ -202,7 +206,7 @@ export const HomePage = () => {
                   />
                 ))}
                 <div ref={sentinelRef} />
-                <p className={styles.lazyStatus}>
+                <LazyStatus>
                   {isLoadingActive
                     ? 'Loading articles...'
                     : isFetchingNextPage
@@ -210,12 +214,12 @@ export const HomePage = () => {
                       : hasNextPage
                         ? ''
                         : 'Loaded all articles'}
-                </p>
+                </LazyStatus>
               </div>
-            </article>
+            </Pane>
           </Grid>
           <Grid sx={{ display: { xs: 'none', md: 'block' } }} size={{ md: 4 }}>
-            <article className={styles.pane}>
+            <Pane>
               <h2>Expired</h2>
               <div>
                 {(isLoadingExpired ? [] : expiredProducts).slice(0, 5).map((product) => (
@@ -226,11 +230,11 @@ export const HomePage = () => {
                   />
                 ))}
               </div>
-            </article>
+            </Pane>
             <p>View all expired</p>
           </Grid>
-        </Grid>
-      </section>
-    </div>
+        </Panes>
+      </StyledContainer>
+    </Page>
   )
 }

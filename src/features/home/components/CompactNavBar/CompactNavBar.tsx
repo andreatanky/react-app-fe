@@ -1,6 +1,15 @@
 import { HomeFilterBar } from '../HomeFilterBar'
-import styles from './CompactNavBar.module.css'
-import dailyNewsLogo from '@/assets/images/dailynews_logo.png';
+import dailyNewsLogo from '@/assets/images/dailynews_logo.png'
+import {
+    Container,
+    Content,
+    TopRow,
+    Logo,
+    Actions,
+    ActionButton,
+    FullWidthDivider,
+    BottomRow,
+} from './CompactNavBar.styled'
 
 type CompactNavBarProps = {
     visible: boolean
@@ -15,34 +24,29 @@ export const CompactNavBar = ({
     onHelp,
     onLogout,
 }: CompactNavBarProps) => (
-    <div className={[styles.container, visible ? styles.visible : ''].filter(Boolean).join(' ')}>
-        <div className={styles.content}>
-            <div className={styles.topRow}>
-                <img src={dailyNewsLogo} alt="DailyNews" className={styles.logo} />
-                <div className={styles.actions}>
-                    <button
-                        type="button"
-                        className={styles.actionButton}
-                        onClick={onSearchAction}
-                    >
+    <Container visible={visible}>
+        <Content>
+            <TopRow>
+                <Logo src={dailyNewsLogo} alt="DailyNews" />
+                <Actions>
+                    <ActionButton type="button" color="inherit" onClick={onSearchAction}>
                         Search
-                    </button>
-                    <button type="button" className={styles.actionButton} onClick={onHelp}>
+                    </ActionButton>
+                    <ActionButton type="button" color="inherit" onClick={onHelp}>
                         Help &amp; FAQ
-                    </button>
-                    <button type="button" className={styles.actionButton} onClick={onLogout}>
+                    </ActionButton>
+                    <ActionButton type="button" color="inherit" onClick={onLogout}>
                         Log Out
-                    </button>
-                </div>
-            </div>
+                    </ActionButton>
+                </Actions>
+            </TopRow>
 
-
-            <hr className={styles.divider} />
-            <div className={styles.bottomRow}>
+            <FullWidthDivider />
+            <BottomRow>
                 <HomeFilterBar />
-            </div>
-        </div>
-    </div>
+            </BottomRow>
+        </Content>
+    </Container>
 )
 
 export default CompactNavBar

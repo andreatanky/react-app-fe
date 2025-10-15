@@ -7,6 +7,9 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
+
+import { darkTheme, lightTheme } from '../../theme'
 
 const THEME_STORAGE_KEY = 'app.theme'
 
@@ -102,7 +105,13 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
     [setTheme, theme, toggleTheme],
   )
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider value={value}>
+      <MuiThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        {children}
+      </MuiThemeProvider>
+    </ThemeContext.Provider>
+  )
 }
 
 export const useTheme = () => {

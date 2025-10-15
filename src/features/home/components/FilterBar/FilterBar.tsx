@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { FilterPill } from '../../../../components/buttons/FilterPill'
-import styles from './FilterBar.module.css'
+import { Bar, ClearButton } from './FilterBar.styled'
 
 export type FilterItem = {
   key: string
@@ -62,12 +62,11 @@ export function FilterBar({
       roundLeft={options.roundLeft}
       roundRight={options.roundRight}
       showDivider={options.showDivider}
-      className={styles.pill}
     />
   )
 
   return (
-    <div className={[styles.bar, className ?? ''].join(' ')}>
+    <Bar className={className}>
       {groups.map((group) => {
         if (group.type === 'single') {
           return renderPill(group.item, {
@@ -93,10 +92,10 @@ export function FilterBar({
       })}
 
       {onClear && (
-        <button type="button" className={styles.clear} onClick={onClear}>
+        <ClearButton type="button" onClick={onClear}>
           Clear
-        </button>
+        </ClearButton>
       )}
-    </div>
+    </Bar>
   )
 }

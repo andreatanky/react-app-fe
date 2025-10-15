@@ -1,8 +1,17 @@
 import { FormEvent, forwardRef } from 'react'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 
 import { HomeFilterBar } from '../HomeFilterBar'
 import { HomeSearchInput } from '../HomeSearchInput'
-import styles from './CompactSearchBar.module.css'
+import {
+    Container,
+    Content,
+    TopRow,
+    SearchRow,
+    BottomRow,
+    FullWidthDivider,
+} from './CompactSearchBar.styled'
 
 type CompactSearchBarProps = {
     visible: boolean
@@ -14,34 +23,28 @@ export const CompactSearchBar = forwardRef<HTMLDivElement, CompactSearchBarProps
     visible,
     onSearchSubmit,
     onExitSearch
-}, ref) => (
-    <div
-        data-compact-search-bar
-        ref={ref}
-        className={[styles.container, visible ? styles.visible : '', styles.expanded].filter(Boolean).join(' ')}
-    >
-        <div className={styles.content}>
-            <div className={[styles.topRow, styles.topRowSearch].join(' ')}>
-                <button
-                    type="button"
-                    className={styles.closeButton}
-                    aria-label="Cancel search"
-                    onClick={onExitSearch}
-                />
-            </div>
-            <hr className={styles.divider} />
-            <div className={styles.searchRow}>
-                <HomeSearchInput
-                    onSubmit={onSearchSubmit}
-                    backgroundColor="var(--color-on-surface)"
-                />
-            </div>
-            <div className={styles.bottomRow}>
-                <HomeFilterBar />
-            </div>
-        </div>
-    </div>
-))
+}, ref) => {
+    return (
+        <Container data-compact-search-bar ref={ref} visible={visible}>
+            <Content>
+                <TopRow>
+                    <IconButton aria-label="Cancel search" onClick={onExitSearch}>
+                        <CloseIcon />
+                    </IconButton>
+                </TopRow>
+                <FullWidthDivider />
+                <SearchRow>
+                    <HomeSearchInput
+                        onSubmit={onSearchSubmit}
+                    />
+                </SearchRow>
+                <BottomRow>
+                    <HomeFilterBar />
+                </BottomRow>
+            </Content>
+        </Container>
+    )
+})
 
 CompactSearchBar.displayName = 'CompactSearchBar'
 

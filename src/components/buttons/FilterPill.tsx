@@ -1,47 +1,119 @@
 import type { ButtonHTMLAttributes } from 'react'
-import styles from './FilterPill.module.css'
+import { styled, type CSSObject } from '@mui/material/styles'
+
+type PillStyleProps = {
+  selected?: boolean
+  roundLeft?: boolean
+  roundRight?: boolean
+  joined?: boolean
+  showDivider?: boolean
+}
 
 export type FilterPillProps = {
-    selected?: boolean
-    onToggle?: () => void
-    label: string
-
-    /** visual options (no behavioral state) */
-    roundLeft?: boolean
-    roundRight?: boolean
-    joined?: boolean          // removes outer gaps so pills can touch
-    showDivider?: boolean     // vertical divider between joined pills
-    className?: string
+  selected?: boolean
+  onToggle?: () => void
+  label: string
+  roundLeft?: boolean
+  roundRight?: boolean
+  joined?: boolean
+  showDivider?: boolean
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'children'>
 
+const PillButton = styled('button', {
+  shouldForwardProp: (prop) =>
+    !['selected', 'roundLeft', 'roundRight', 'joined', 'showDivider'].includes(
+      prop as string,
+    ),
+})<PillStyleProps>(({ theme, selected, roundLeft, roundRight, joined, showDivider }) => {
+  const radius = 999
+  const base: CSSObject = {
+    appearance: 'none',
+    backgroundColor: selected
+      ? theme.palette.surface.dim
+      : theme.palette.surface.bright,
+    color: theme.palette.surface.on,
+    border: 0,
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: theme.spacing(0.5, 2),
+    borderRadius: radius,
+    cursor: 'pointer',
+    userSelect: 'none',
+    transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color'], {
+      duration: theme.transitions.duration.shorter,
+    }),
+    font: 'inherit',
+    outline: 'none',
+    '&:hover': {
+      backgroundColor: selected
+        ? theme.palette.surface.container
+        : theme.palette.surface.base,
+    },
+    '&:focus-visible': {
+      boxShadow: `${theme.palette.surface.outline}40 0 0 0 2px`,
+    },
+  }
+
+  if (roundLeft) {
+    base.borderTopLeftRadius = radius
+    base.borderBottomLeftRadius = radius
+  }
+
+  if (roundRight) {
+    base.borderTopRightRadius = radius
+    base.borderBottomRightRadius = radius
+  }
+
+  if (joined) {
+    base.borderRadius = 0
+    base['& + &'] = {
+      marginLeft: `calc(-1 * ${theme.spacing(1.5)})`,
+    }
+  }
+
+  if (showDivider) {
+    base.position = 'relative'
+    base['&::before'] = {
+      content: '""',
+      position: 'absolute',
+      left: -1,
+      top: '20%',
+      width: 1,
+      height: '60%',
+      backgroundColor: theme.palette.surface.outline,
+    }
+  }
+
+  return base
+})
+
+const Label = styled('span')(() => ({
+  whiteSpace: 'nowrap',
+}))
+
 export function FilterPill({
-    selected = false,
-    onToggle,
-    label,
-    roundLeft,
-    roundRight,
-    joined,
-    showDivider,
-    className,
-    ...rest
+  selected = false,
+  onToggle,
+  label,
+  roundLeft,
+  roundRight,
+  joined,
+  showDivider,
+  ...rest
 }: FilterPillProps) {
-    return (
-        <button
-            type="button"
-            className={[
-                styles.pill,
-                selected ? styles.selected : '',
-                joined ? styles.joined : '',
-                roundLeft ? styles.roundLeft : '',
-                roundRight ? styles.roundRight : '',
-                showDivider ? styles.withDivider : '',
-                className ?? '',
-            ].join(' ')}
-            aria-pressed={selected}
-            onClick={onToggle}
-            {...rest}
-        >
-            <span className={styles.label}>{label}</span>
-        </button>
-    )
+  return (
+    <PillButton
+      type="button"
+      aria-pressed={selected}
+      onClick={onToggle}
+      selected={selected}
+      roundLeft={roundLeft}
+      roundRight={roundRight}
+      joined={joined}
+      showDivider={showDivider}
+      {...rest}
+    >
+      <Label>{label}</Label>
+    </PillButton>
+  )
 }
