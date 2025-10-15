@@ -45,4 +45,3 @@ export const ProductCardHeader = ({
 )
 
 export default ProductCardHeader
-

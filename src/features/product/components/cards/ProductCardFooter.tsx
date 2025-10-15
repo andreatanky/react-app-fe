@@ -63,10 +63,10 @@ export const ProductCardFooter = ({
     <div className={styles.footer}>
       {showDesktopLabel ? (
         <Label
-          className={styles.desktopOnlyLabel}
           text="Desktop Only"
           backgroundColor="var(--color-on-surface-variant)"
           textColor="var(--color-surface)"
+          className={styles.desktopOnlyLabel}
         />
       ) : null}
 

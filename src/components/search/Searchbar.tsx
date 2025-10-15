@@ -1,5 +1,6 @@
 import { FormEvent } from 'react'
-import styles from './SearchBar.module.css'
+import { styled } from '@mui/material/styles'
+import { useTheme as useMuiTheme } from '@mui/material/styles'
 import searchIcon from '@/assets/icons/search_icon.svg';
 
 export type SearchbarProps = {
@@ -11,6 +12,43 @@ export type SearchbarProps = {
     onActivate?: () => void
 }
 
+const Form = styled('form', {
+    shouldForwardProp: (prop) => prop !== '$backgroundColor',
+})<{ $backgroundColor?: string }>(({ theme, $backgroundColor }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    height: 48,
+    borderRadius: 100,
+    paddingInline: 8,
+    background: $backgroundColor ?? theme.palette.surface.containerHigh,
+    color: theme.palette.surface.onVariant,
+    width: '100%',
+}))
+
+const Icon = styled('span')(() => ({
+    display: 'grid',
+    placeItems: 'center',
+}))
+
+const Logo = styled('img')(() => ({
+    width: 36,
+    height: 36,
+    display: 'block',
+}))
+
+const Input = styled('input')(({ theme }) => ({
+    flex: 1,
+    minWidth: 0,
+    border: 0,
+    outline: 'none',
+    background: 'transparent',
+    color: 'inherit',
+    font: 'inherit',
+    '::placeholder': {
+        color: theme.palette.surface.onVariant,
+    },
+}))
+
 export const Searchbar = ({
     query,
     onQueryChange,
@@ -19,6 +57,7 @@ export const Searchbar = ({
     backgroundColor,
     onActivate
 }: SearchbarProps) => {
+    const theme = useMuiTheme()
 
     const submit = (e: FormEvent) => {
         e.preventDefault()
@@ -29,23 +68,20 @@ export const Searchbar = ({
         onActivate?.()
     }
 
-    return <form role="search" className={[styles.container].join(' ')} style={backgroundColor ? { background: backgroundColor } : undefined} onSubmit={submit}>
-        <span className={styles.icon} aria-hidden="true">
-            <img
-                className={styles.logo}
-                src={searchIcon}
-                alt="Search"
+    return (
+        <Form role="search" onSubmit={submit} $backgroundColor={backgroundColor ?? theme.palette.surface.containerHigh}>
+            <Icon aria-hidden="true">
+                <Logo src={searchIcon} alt="Search" />
+            </Icon>
+            <Input
+                value={query}
+                onChange={(e) => onQueryChange(e.target.value)}
+                onFocus={handleActivate}
+                onClick={handleActivate}
+                type="search"
+                placeholder={placeholder}
+                aria-label="Search articles"
             />
-        </span>
-        <input
-            value={query}
-            onChange={(e) => onQueryChange(e.target.value)}
-            onFocus={handleActivate}
-            onClick={handleActivate}
-            className={styles.input}
-            type="search"
-            placeholder={placeholder}
-            aria-label="Search articles"
-        />
-    </form>
+        </Form>
+    )
 }

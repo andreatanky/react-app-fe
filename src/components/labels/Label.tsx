@@ -1,6 +1,5 @@
 import type { CSSProperties, PropsWithChildren } from 'react'
-
-import styles from './Label.module.css'
+import { styled } from '@mui/material/styles'
 
 interface LabelProps {
   text: string
@@ -9,6 +8,21 @@ interface LabelProps {
   className?: string
   style?: CSSProperties
 }
+
+const StyledLabel = styled('span')(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: theme.spacing(0.5),
+  padding: theme.spacing(0.25, 1),
+  borderRadius: theme.shape.borderRadius,
+  fontSize: '0.75rem',
+  fontWeight: 500,
+  letterSpacing: '0.045em',
+  textTransform: 'uppercase',
+  whiteSpace: 'nowrap',
+  background: `${theme.palette.surface.on}24`,
+  color: theme.palette.surface.on,
+}))
 
 export const Label = ({
   text,
@@ -30,12 +44,9 @@ export const Label = ({
   }
 
   return (
-    <span
-      className={[styles.label, className ?? ''].filter(Boolean).join(' ')}
-      style={inlineStyles}
-    >
+    <StyledLabel className={className} style={inlineStyles}>
       {text.toUpperCase()}
-    </span>
+    </StyledLabel>
   )
 }
 
