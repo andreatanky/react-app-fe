@@ -1,6 +1,7 @@
 import { FormEvent, forwardRef } from 'react'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
+import { useTheme as useMuiTheme } from '@mui/material/styles'
 
 import { HomeFilterBar } from '../HomeFilterBar'
 import { HomeSearchInput } from '../HomeSearchInput'
@@ -24,6 +25,8 @@ export const CompactSearchBar = forwardRef<HTMLDivElement, CompactSearchBarProps
     onSearchSubmit,
     onExitSearch
 }, ref) => {
+    const muiTheme = useMuiTheme()
+
     return (
         <Container data-compact-search-bar ref={ref} visible={visible}>
             <Content>
@@ -36,6 +39,7 @@ export const CompactSearchBar = forwardRef<HTMLDivElement, CompactSearchBarProps
                 <SearchRow>
                     <HomeSearchInput
                         onSubmit={onSearchSubmit}
+                        backgroundColor={muiTheme.palette.surface.on}
                     />
                 </SearchRow>
                 <BottomRow>

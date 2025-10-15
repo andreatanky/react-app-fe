@@ -8,7 +8,7 @@ export const Container = styled('div', {
   left: 0,
   right: 0,
   width: '100%',
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.surface.base,
   boxShadow: theme.shadows[8],
   transform: visible ? 'translateY(0)' : 'translateY(-100%)',
   transition: theme.transitions.create('transform', {

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { FilterPill } from '../../../../components/buttons/FilterPill'
-import { Bar, ClearButton } from './FilterBar.styled'
+import { Bar, ClearButton, SegmentGroup } from './FilterBar.styled'
 
 export type FilterItem = {
   key: string
@@ -77,18 +77,22 @@ export function FilterBar({
           })
         }
 
-        return group.items.map((pill, index) => {
-          const isFirst = index === 0
-          const isLast = index === group.items.length - 1
-          const hasSiblings = group.items.length > 1
+        return (
+          <SegmentGroup key={group.segment}>
+            {group.items.map((pill, index) => {
+              const isFirst = index === 0
+              const isLast = index === group.items.length - 1
+              const hasSiblings = group.items.length > 1
 
-          return renderPill(pill, {
-            joined: hasSiblings,
-            roundLeft: isFirst || !hasSiblings,
-            roundRight: isLast || !hasSiblings,
-            showDivider: hasSiblings && index > 0,
-          })
-        })
+              return renderPill(pill, {
+                joined: hasSiblings,
+                roundLeft: isFirst || !hasSiblings,
+                roundRight: isLast || !hasSiblings,
+                showDivider: hasSiblings && index > 0,
+              })
+            })}
+          </SegmentGroup>
+        )
       })}
 
       {onClear && (

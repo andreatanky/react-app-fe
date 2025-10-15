@@ -7,6 +7,7 @@ import {
   useRef,
 } from 'react'
 import Grid from '@mui/material/Grid'
+import { useTheme as useMuiTheme } from '@mui/material/styles'
 import { useNavigate } from '@tanstack/react-router'
 
 import ProductCard from '../product/components/cards/ProductCard'
@@ -44,6 +45,7 @@ export const HomePage = () => {
   const navigate = useNavigate()
   const { query, selectedFilters, isSearchMode, enterSearchMode, exitSearchMode } =
     useHomeSearch()
+  const muiTheme = useMuiTheme()
   const filterSectionRef = useRef<HTMLDivElement | null>(null)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -164,17 +166,7 @@ export const HomePage = () => {
       )}
       <StyledContainer blurred={showBackdrop}>
         {isSearchMode ? (
-          <SearchModePlaceholder>
-            <SearchModeBreadcrumb>
-              <SearchModeRoot>All Articles</SearchModeRoot>
-              <SearchModeTrail>
-                <SearchModeDelimiter>&gt;</SearchModeDelimiter>
-                <SearchModeQuery>
-                  {trimmedQuery ? `'${trimmedQuery}'` : "'...'"}
-                </SearchModeQuery>
-              </SearchModeTrail>
-            </SearchModeBreadcrumb>
-          </SearchModePlaceholder>
+          <SearchModePlaceholder />
         ) : (
           <>
             <WrapperLanding>
@@ -186,6 +178,7 @@ export const HomePage = () => {
                 <HomeSearchInput
                   onSubmit={submitSearch}
                   onActivate={handleSearchInputActivate}
+                  backgroundColor={muiTheme.palette.surface.containerHigh}
                 />
                 <HomeFilterBar />
               </SearchSection>

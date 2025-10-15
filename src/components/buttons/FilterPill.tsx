@@ -66,9 +66,7 @@ const PillButton = styled('button', {
 
   if (joined) {
     base.borderRadius = 0
-    base['& + &'] = {
-      marginLeft: `calc(-1 * ${theme.spacing(1.5)})`,
-    }
+    base.margin = 0
   }
 
   if (showDivider) {
@@ -76,10 +74,10 @@ const PillButton = styled('button', {
     base['&::before'] = {
       content: '""',
       position: 'absolute',
-      left: -1,
-      top: '20%',
+      left: 0,
+      top: 0,
       width: 1,
-      height: '60%',
+      height: '100%',
       backgroundColor: theme.palette.surface.outline,
     }
   }

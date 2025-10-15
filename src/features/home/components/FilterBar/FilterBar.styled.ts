@@ -7,6 +7,19 @@ export const Bar = styled('div')(({ theme }) => ({
   alignItems: 'center',
 }))
 
+export const SegmentGroup = styled('div')(({ theme }) => ({
+  display: 'inline-flex',
+  borderRadius: 999,
+  overflow: 'hidden',
+  gap: 0,
+  '& > *': {
+    margin: 0,
+  },
+  '& > *:not(:last-child)': {
+    position: 'relative',
+  },
+}))
+
 export const ClearButton = styled('button')(({ theme }) => ({
   appearance: 'none',
   background: 'transparent',

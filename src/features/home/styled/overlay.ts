@@ -1,8 +1,11 @@
 import { alpha, styled } from '@mui/material/styles'
 
 export const PageOverlay = styled('div')(({ theme }) => ({
-  position: 'absolute',
-  inset: 0,
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
   background: alpha(theme.palette.background.default, 0.35),
   backdropFilter: 'blur(6px)',
   pointerEvents: 'auto',
