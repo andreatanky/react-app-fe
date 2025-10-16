@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
+import type React from "react";
+import { useEffect, useRef } from "react";
 
 interface PieChartProps {
 	colors?: string[];
@@ -54,15 +55,12 @@ const PieChart: React.FC<PieChartProps> = ({
 
 		ctx.clearRect(0, 0, size, size);
 
-		const outline =
-			outlineColor ?? theme.palette.surface.onVariant;
-		const background =
-			backgroundColor ?? theme.palette.surface.base;
-		const sliceColors =
-			colors ?? [
-				theme.palette.surface.onVariant,
-				theme.palette.surface.base,
-			];
+		const outline = outlineColor ?? theme.palette.surface.onVariant;
+		const background = backgroundColor ?? theme.palette.surface.base;
+		const sliceColors = colors ?? [
+			theme.palette.surface.onVariant,
+			theme.palette.surface.base,
+		];
 
 		const resolvedOutline = resolveCssColor(outline);
 		const resolvedBackground = resolveCssColor(background);

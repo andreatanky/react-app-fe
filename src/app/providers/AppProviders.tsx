@@ -1,20 +1,19 @@
-import { ReactNode, useMemo, useState } from "react";
 import {
 	QueryClient,
 	QueryClientProvider,
 	useQueryClient,
 } from "@tanstack/react-query";
 import { RouterProvider } from "@tanstack/react-router";
-import { StoreApi } from "zustand";
-
-import { AuthProvider } from "./AuthProvider";
+import { type ReactNode, useMemo, useState } from "react";
+import type { StoreApi } from "zustand";
+import { createAppRouter } from "../router/router";
 import {
+	type AuthStore,
 	createAuthStore,
 	useAuthStoreApi,
-	type AuthStore,
 } from "../store/authStore";
+import { AuthProvider } from "./AuthProvider";
 import { ThemeProvider } from "./ThemeProvider";
-import { createAppRouter } from "../router/router";
 
 type AppProvidersProps = {
 	children?: ReactNode;

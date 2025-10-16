@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import Label from "../../../../components/labels/Label";
 import interpunct from "@/assets/icons/interpunct.svg";
+import Label from "../../../../components/labels/Label";
 
 const MetaRow = styled.div`
   display: flex;

@@ -1,17 +1,17 @@
-import { FormEvent, forwardRef } from "react";
-import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
+import { type FormEvent, forwardRef } from "react";
 
 import { HomeFilterBar } from "../HomeFilterBar";
 import { HomeSearchInput } from "../HomeSearchInput";
 import {
+	BottomRow,
 	Container,
 	Content,
-	TopRow,
-	SearchRow,
-	BottomRow,
 	FullWidthDivider,
+	SearchRow,
+	TopRow,
 } from "./CompactSearchBar.styled";
 
 type CompactSearchBarProps = {

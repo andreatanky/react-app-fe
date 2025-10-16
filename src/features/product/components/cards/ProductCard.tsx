@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 import type { KeyboardEvent } from "react";
-import { Product } from "../../models/Product";
+import card_background from "@/assets/images/card_background_dark.svg";
 import { isDesktopOnlyProduct } from "../../../../utils/productUtils";
+import type { Product } from "../../models/Product";
 import ProductCardFooter from "./ProductCardFooter";
 import ProductCardHeader from "./ProductCardHeader";
-import card_background from "@/assets/images/card_background_dark.svg";
 
 // ========================
 // Styled Components (Emotion)

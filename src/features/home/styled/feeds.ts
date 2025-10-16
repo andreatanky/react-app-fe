@@ -1,5 +1,5 @@
-import Grid from "@mui/material/Grid";
 import styled from "@emotion/styled";
+import Grid from "@mui/material/Grid";
 
 export const Panes = styled(Grid)(() => ({
 	width: "100%",

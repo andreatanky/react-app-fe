@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { StoreApi, useStore } from "zustand";
+import { type StoreApi, useStore } from "zustand";
 import { createStore } from "zustand/vanilla";
 
 export type AuthStatus = "unauthenticated" | "loading" | "authenticated";

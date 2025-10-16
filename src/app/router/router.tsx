@@ -1,17 +1,16 @@
+import type { QueryClient } from "@tanstack/react-query";
 import {
-	Outlet,
 	createRootRouteWithContext,
 	createRoute,
 	createRouter,
+	Outlet,
 } from "@tanstack/react-router";
-import { QueryClient } from "@tanstack/react-query";
 import type { StoreApi } from "zustand";
-
-import { type AuthStore } from "../store/authStore";
-import { AppRootLayout } from "./AppRootLayout";
-import { HomePage } from "../../features/home/HomePage";
 import { HelpPage } from "../../features/help/HelpPage";
+import { HomePage } from "../../features/home/HomePage";
 import { ReadingEnvironmentPage } from "../../features/reading/ReadingEnvironmentPage";
+import type { AuthStore } from "../store/authStore";
+import { AppRootLayout } from "./AppRootLayout";
 
 export type AppRouterContext = {
 	queryClient: QueryClient;

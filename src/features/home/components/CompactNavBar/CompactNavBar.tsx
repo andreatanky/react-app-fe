@@ -1,14 +1,14 @@
-import { HomeFilterBar } from "../HomeFilterBar";
 import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
+import { HomeFilterBar } from "../HomeFilterBar";
 import {
+	ActionButton,
+	Actions,
+	BottomRow,
 	Container,
 	Content,
-	TopRow,
-	Logo,
-	Actions,
-	ActionButton,
 	FullWidthDivider,
-	BottomRow,
+	Logo,
+	TopRow,
 } from "./CompactNavBar.styled";
 
 type CompactNavBarProps = {

@@ -1,11 +1,11 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { StoreApi } from "zustand";
+import { type PropsWithChildren, useEffect, useState } from "react";
+import type { StoreApi } from "zustand";
 
 import {
-	AuthStore,
+	type AuthState,
+	type AuthStore,
 	AuthStoreContext,
 	createAuthStore,
-	type AuthState,
 } from "../store/authStore";
 
 type AuthProviderProps = PropsWithChildren<{

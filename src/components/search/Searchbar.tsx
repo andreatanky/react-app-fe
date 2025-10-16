@@ -1,5 +1,5 @@
-import { FormEvent } from "react";
 import styled from "@emotion/styled";
+import type { FormEvent } from "react";
 import searchIcon from "@/assets/icons/search_icon.svg";
 
 export type SearchbarProps = {
@@ -11,7 +11,6 @@ export type SearchbarProps = {
 	onActivate?: () => void;
 };
 
-// Styled form that reacts to $backgroundColor prop
 const Form = styled("form", {
 	shouldForwardProp: (prop) => prop !== "$backgroundColor",
 })<{ $backgroundColor?: string }>(({ theme, $backgroundColor }) => ({

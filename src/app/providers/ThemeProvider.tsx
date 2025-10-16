@@ -1,13 +1,13 @@
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import {
-	PropsWithChildren,
 	createContext,
+	type PropsWithChildren,
 	useCallback,
 	useContext,
 	useEffect,
 	useMemo,
 	useState,
 } from "react";
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 
 import { darkTheme, lightTheme } from "../../theme";
 

@@ -1,5 +1,5 @@
-import { useHomeSearchStore } from "../store/useHomeSearchStore";
 import { useShallow } from "zustand/react/shallow";
+import { useHomeSearchStore } from "../store/useHomeSearchStore";
 
 export const useHomeSearch = () => {
 	return useHomeSearchStore(

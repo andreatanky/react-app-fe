@@ -1,39 +1,38 @@
+import Grid from "@mui/material/Grid";
+import { useTheme as useMuiTheme } from "@mui/material/styles";
+import { useNavigate } from "@tanstack/react-router";
 import {
-	FormEvent,
-	KeyboardEvent,
+	type FormEvent,
+	type KeyboardEvent,
 	useCallback,
 	useEffect,
 	useMemo,
 	useRef,
 } from "react";
-import Grid from "@mui/material/Grid";
-import { useTheme as useMuiTheme } from "@mui/material/styles";
-import { useNavigate } from "@tanstack/react-router";
-
+import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
 import ProductCard from "../product/components/cards/ProductCard";
 import CompactNavBar from "./components/CompactNavBar/CompactNavBar";
-import CompactSearchBar from "./components/SearchMode/CompactSearchBar";
-import { HomeTopNav } from "./components/HomeTopNav/HomeTopNav";
-import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
-import { useHomeScrollRestoration } from "./ScrollRestorationProvider";
 import { HomeFilterBar } from "./components/HomeFilterBar";
 import { HomeSearchInput } from "./components/HomeSearchInput";
-import { useStickyVisibility } from "./hooks/useStickyVisibility";
-import { useInfiniteScrollTrigger } from "./hooks/useInfiniteScrollTrigger";
-import { useHomeSearch } from "./hooks/useHomeSearch";
+import { HomeTopNav } from "./components/HomeTopNav/HomeTopNav";
+import CompactSearchBar from "./components/SearchMode/CompactSearchBar";
 import { useActiveProductsFeed } from "./hooks/useActiveProductsFeed";
 import { useExpiredProducts } from "./hooks/useExpiredProducts";
-import { Page } from "./styled/Page";
+import { useHomeSearch } from "./hooks/useHomeSearch";
+import { useInfiniteScrollTrigger } from "./hooks/useInfiniteScrollTrigger";
+import { useStickyVisibility } from "./hooks/useStickyVisibility";
+import { useHomeScrollRestoration } from "./ScrollRestorationProvider";
+import { LazyStatus, Pane, Panes } from "./styled/feeds";
 import {
+	Logo,
+	SearchModePlaceholder,
+	SearchSection,
+	SearchSectionWrapper,
 	StyledContainer,
 	WrapperLanding,
-	Logo,
-	SearchSectionWrapper,
-	SearchSection,
-	SearchModePlaceholder,
 } from "./styled/layout";
-import { Pane, Panes, LazyStatus } from "./styled/feeds";
 import { PageOverlay } from "./styled/overlay";
+import { Page } from "./styled/Page";
 
 export const HomePage = () => {
 	useHomeScrollRestoration();

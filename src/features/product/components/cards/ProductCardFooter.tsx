@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { type ReactNode } from "react";
-import Label from "../../../../components/labels/Label";
-import PieChart from "../../../../components/piechart/PieChart";
+import type { ReactNode } from "react";
 import interpunct from "@/assets/icons/interpunct.svg";
 import task_read from "@/assets/icons/task_alt.svg";
+import Label from "../../../../components/labels/Label";
+import PieChart from "../../../../components/piechart/PieChart";
 
 const Footer = styled.div`
   display: flex;

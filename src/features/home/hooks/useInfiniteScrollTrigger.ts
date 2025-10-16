@@ -1,4 +1,4 @@
-import { MutableRefObject, useMemo } from "react";
+import { type MutableRefObject, useMemo } from "react";
 
 import { useIsIntersecting } from "./useIsIntersecting";
 

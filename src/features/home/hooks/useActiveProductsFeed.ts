@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 import { fetchActiveProducts } from "../../../mocks/api/productsApi";
 

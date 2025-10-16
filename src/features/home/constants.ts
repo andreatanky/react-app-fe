@@ -1,4 +1,4 @@
-import { type FilterItem } from "./components/FilterBar/FilterBar";
+import type { FilterItem } from "./components/FilterBar/FilterBar";
 
 export const HOME_FILTERS: FilterItem[] = [
 	{ key: "urgent", label: "Urgent" },
