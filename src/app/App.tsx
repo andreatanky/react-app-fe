@@ -1,5 +1,5 @@
-import { AppProviders } from './providers/AppProviders'
+import { AppProviders } from "./providers/AppProviders";
 
-const App = () => <AppProviders />
+const App = () => <AppProviders />;
 
-export default App
+export default App;

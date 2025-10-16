@@ -1,10 +1,10 @@
-import styled from '@emotion/styled'
-import type { KeyboardEvent } from 'react'
-import { Product } from '../../models/Product'
-import { isDesktopOnlyProduct } from '../../../../utils/productUtils'
-import ProductCardFooter from './ProductCardFooter'
-import ProductCardHeader from './ProductCardHeader'
-import card_background from '@/assets/images/card_background_dark.svg'
+import styled from "@emotion/styled";
+import type { KeyboardEvent } from "react";
+import { Product } from "../../models/Product";
+import { isDesktopOnlyProduct } from "../../../../utils/productUtils";
+import ProductCardFooter from "./ProductCardFooter";
+import ProductCardHeader from "./ProductCardHeader";
+import card_background from "@/assets/images/card_background_dark.svg";
 
 // ========================
 // Styled Components (Emotion)
@@ -39,7 +39,7 @@ const Card = styled.article`
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
-`
+`;
 
 const Background = styled.img`
   position: absolute;
@@ -52,7 +52,7 @@ const Background = styled.img`
   object-fit: contain;
   pointer-events: none;
   z-index: 0;
-`
+`;
 
 const Content = styled.div`
   position: relative;
@@ -60,7 +60,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`
+`;
 
 const Title = styled.h3`
   margin: 0;
@@ -75,93 +75,93 @@ const Title = styled.h3`
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-`
+`;
 
 // ========================
 // Logic
 // ========================
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  month: 'short',
-  day: 'numeric',
-})
+	month: "short",
+	day: "numeric",
+});
 
 const formatDate = (raw: string) => {
-  const parsed = Date.parse(raw)
-  if (Number.isNaN(parsed)) return null
-  return dateFormatter.format(new Date(parsed))
-}
+	const parsed = Date.parse(raw);
+	if (Number.isNaN(parsed)) return null;
+	return dateFormatter.format(new Date(parsed));
+};
 
 const pluralise = (value: number, unit: string) =>
-  `${value} ${unit}${value === 1 ? '' : 's'}`
+	`${value} ${unit}${value === 1 ? "" : "s"}`;
 
 const isExpired = (rawExpiry: string) => {
-  const parsed = Date.parse(rawExpiry)
-  if (Number.isNaN(parsed)) return false
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  return parsed < today.getTime()
-}
+	const parsed = Date.parse(rawExpiry);
+	if (Number.isNaN(parsed)) return false;
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	return parsed < today.getTime();
+};
 
 const getProgressPercent = (value: number) => {
-  if (!Number.isFinite(value)) return 0
-  if (value <= 1) return Math.round(value * 100)
-  return Math.round(Math.min(value, 100))
-}
+	if (!Number.isFinite(value)) return 0;
+	if (value <= 1) return Math.round(value * 100);
+	return Math.round(Math.min(value, 100));
+};
 
 export const ProductCard = ({
-  product,
-  onProductClick,
-  className,
+	product,
+	onProductClick,
+	className,
 }: {
-  product: Product
-  onProductClick: (id: string) => void
-  className?: string
+	product: Product;
+	onProductClick: (id: string) => void;
+	className?: string;
 }) => {
-  const publishedDisplay = formatDate(product.publishedDate)
-  const progressPercent = getProgressPercent(product.readProgress)
-  const readDurationLabel = pluralise(product.readingDuration, 'minute')
-  const isRead = product.isRead
-  const showDesktopLabel = isDesktopOnlyProduct(product.classification)
-  const pieChartDegrees = [progressPercent, 100 - progressPercent]
-  const expired = isExpired(product.expiryDate)
+	const publishedDisplay = formatDate(product.publishedDate);
+	const progressPercent = getProgressPercent(product.readProgress);
+	const readDurationLabel = pluralise(product.readingDuration, "minute");
+	const isRead = product.isRead;
+	const showDesktopLabel = isDesktopOnlyProduct(product.classification);
+	const pieChartDegrees = [progressPercent, 100 - progressPercent];
+	const expired = isExpired(product.expiryDate);
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      onProductClick(product.systemDocId)
-    }
-  }
+	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+		if (event.key === "Enter" || event.key === " ") {
+			event.preventDefault();
+			onProductClick(product.systemDocId);
+		}
+	};
 
-  const statusClass = expired ? 'expired' : isRead ? 'read' : 'unread'
-  const titleClass = expired ? 'titleClamp' : ''
+	const statusClass = expired ? "expired" : isRead ? "read" : "unread";
+	const titleClass = expired ? "titleClamp" : "";
 
-  return (
-    <Card
-      className={`${statusClass} ${className ?? ''}`}
-      onClick={() => onProductClick(product.systemDocId)}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-    >
-      {!expired && !isRead && <Background src={card_background} alt="" />}
+	return (
+		<Card
+			className={`${statusClass} ${className ?? ""}`}
+			onClick={() => onProductClick(product.systemDocId)}
+			onKeyDown={handleKeyDown}
+			tabIndex={0}
+		>
+			{!expired && !isRead && <Background src={card_background} alt="" />}
 
-      <Content>
-        <ProductCardHeader
-          publishedDisplay={publishedDisplay}
-          expired={expired}
-          isUrgent={product.isUrgent}
-        />
-        <Title className={titleClass}>{product.title}</Title>
-        <ProductCardFooter
-          showDesktopLabel={showDesktopLabel}
-          isRead={isRead}
-          progressPercent={progressPercent}
-          readDurationLabel={readDurationLabel}
-          pieChartDegrees={pieChartDegrees}
-        />
-      </Content>
-    </Card>
-  )
-}
+			<Content>
+				<ProductCardHeader
+					publishedDisplay={publishedDisplay}
+					expired={expired}
+					isUrgent={product.isUrgent}
+				/>
+				<Title className={titleClass}>{product.title}</Title>
+				<ProductCardFooter
+					showDesktopLabel={showDesktopLabel}
+					isRead={isRead}
+					progressPercent={progressPercent}
+					readDurationLabel={readDurationLabel}
+					pieChartDegrees={pieChartDegrees}
+				/>
+			</Content>
+		</Card>
+	);
+};
 
-export default ProductCard
+export default ProductCard;

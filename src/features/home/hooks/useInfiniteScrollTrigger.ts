@@ -1,12 +1,12 @@
-import { MutableRefObject, useMemo } from 'react'
+import { MutableRefObject, useMemo } from "react";
 
-import { useIsIntersecting } from './useIsIntersecting'
+import { useIsIntersecting } from "./useIsIntersecting";
 
 export const useInfiniteScrollTrigger = (
-  sentinelRef: MutableRefObject<Element | null>,
-  enabled: boolean,
-  options?: IntersectionObserverInit,
+	sentinelRef: MutableRefObject<Element | null>,
+	enabled: boolean,
+	options?: IntersectionObserverInit,
 ) => {
-  const isIntersecting = useIsIntersecting(sentinelRef, options, enabled)
-  return useMemo(() => enabled && isIntersecting, [enabled, isIntersecting])
-}
+	const isIntersecting = useIsIntersecting(sentinelRef, options, enabled);
+	return useMemo(() => enabled && isIntersecting, [enabled, isIntersecting]);
+};

@@ -1,30 +1,30 @@
-import { MutableRefObject, useCallback, useEffect, useState } from 'react'
+import { MutableRefObject, useCallback, useEffect, useState } from "react";
 
-import { useIntersectionObserver } from './useIntersectionObserver'
+import { useIntersectionObserver } from "./useIntersectionObserver";
 
 export const useIsIntersecting = (
-  targetRef: MutableRefObject<Element | null>,
-  options?: IntersectionObserverInit,
-  enabled = true,
+	targetRef: MutableRefObject<Element | null>,
+	options?: IntersectionObserverInit,
+	enabled = true,
 ) => {
-  const [isIntersecting, setIsIntersecting] = useState(true)
+	const [isIntersecting, setIsIntersecting] = useState(true);
 
-  useEffect(() => {
-    if (!enabled) {
-      setIsIntersecting(true)
-    }
-  }, [enabled])
+	useEffect(() => {
+		if (!enabled) {
+			setIsIntersecting(true);
+		}
+	}, [enabled]);
 
-  const handleIntersection = useCallback<IntersectionObserverCallback>(
-    ([entry]) => {
-      if (entry && enabled) {
-        setIsIntersecting(entry.isIntersecting)
-      }
-    },
-    [enabled],
-  )
+	const handleIntersection = useCallback<IntersectionObserverCallback>(
+		([entry]) => {
+			if (entry && enabled) {
+				setIsIntersecting(entry.isIntersecting);
+			}
+		},
+		[enabled],
+	);
 
-  useIntersectionObserver(targetRef, handleIntersection, options, enabled)
+	useIntersectionObserver(targetRef, handleIntersection, options, enabled);
 
-  return isIntersecting
-}
+	return isIntersecting;
+};

@@ -1,97 +1,104 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 
 interface PieChartProps {
-    colors?: string[];
-    degrees: number[];
-    outlineColor?: string;
-    outlineStrokeWidth?: number;
-    size?: number;
-    backgroundColor?: string;
+	colors?: string[];
+	degrees: number[];
+	outlineColor?: string;
+	outlineStrokeWidth?: number;
+	size?: number;
+	backgroundColor?: string;
 }
 
 const resolveCssColor = (value: string) => {
-    if (typeof window === 'undefined') return value;
-    if (!value.startsWith('var(')) return value;
+	if (typeof window === "undefined") return value;
+	if (!value.startsWith("var(")) return value;
 
-    const varName = value.slice(4, -1).trim();
-    const computed = getComputedStyle(document.documentElement)
-        .getPropertyValue(varName)
-        .trim();
+	const varName = value.slice(4, -1).trim();
+	const computed = getComputedStyle(document.documentElement)
+		.getPropertyValue(varName)
+		.trim();
 
-    return computed || value;
+	return computed || value;
 };
 
 const PieChart: React.FC<PieChartProps> = ({
-    colors = ['var(--color-on-surface-variant)', 'var(--color-surface)'],
-    degrees,
-    outlineColor = 'var(--color-on-surface-variant)',
-    outlineStrokeWidth = 1.5,
-    size = 18,
-    backgroundColor = 'var(--color-surface)',
+	colors = ["var(--color-on-surface-variant)", "var(--color-surface)"],
+	degrees,
+	outlineColor = "var(--color-on-surface-variant)",
+	outlineStrokeWidth = 1.5,
+	size = 18,
+	backgroundColor = "var(--color-surface)",
 }) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+	const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+	useEffect(() => {
+		const canvas = canvasRef.current;
+		if (!canvas) return;
 
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+		const ctx = canvas.getContext("2d");
+		if (!ctx) return;
 
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = size * dpr;
-        canvas.height = size * dpr;
-        canvas.style.width = `${size}px`;
-        canvas.style.height = `${size}px`;
+		const dpr = window.devicePixelRatio || 1;
+		canvas.width = size * dpr;
+		canvas.height = size * dpr;
+		canvas.style.width = `${size}px`;
+		canvas.style.height = `${size}px`;
 
-        ctx.scale(dpr, dpr);
+		ctx.scale(dpr, dpr);
 
-        const centerX = size / 2;
-        const centerY = size / 2;
-        const radius = (size - outlineStrokeWidth) / 2;
+		const centerX = size / 2;
+		const centerY = size / 2;
+		const radius = (size - outlineStrokeWidth) / 2;
 
-        ctx.clearRect(0, 0, size, size);
+		ctx.clearRect(0, 0, size, size);
 
-        const resolvedOutline = resolveCssColor(outlineColor);
-        const resolvedBackground = resolveCssColor(backgroundColor);
-        const resolvedColors = colors.map(resolveCssColor);
+		const resolvedOutline = resolveCssColor(outlineColor);
+		const resolvedBackground = resolveCssColor(backgroundColor);
+		const resolvedColors = colors.map(resolveCssColor);
 
-        // Fill base circle with background color to represent uncovered degrees
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-        ctx.closePath();
-        ctx.fillStyle = resolvedBackground;
-        ctx.fill();
+		// Fill base circle with background color to represent uncovered degrees
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+		ctx.closePath();
+		ctx.fillStyle = resolvedBackground;
+		ctx.fill();
 
-        // Draw slices
-        let startAngle = -Math.PI / 2;
+		// Draw slices
+		let startAngle = -Math.PI / 2;
 
-        degrees.forEach((degree, index) => {
-            const sweepAngle = (Math.abs(degree) / 100) * 2 * Math.PI;
-            if (sweepAngle <= 0) {
-                return;
-            }
+		degrees.forEach((degree, index) => {
+			const sweepAngle = (Math.abs(degree) / 100) * 2 * Math.PI;
+			if (sweepAngle <= 0) {
+				return;
+			}
 
-            ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.arc(centerX, centerY, radius, startAngle, startAngle + sweepAngle);
-            ctx.closePath();
-            ctx.fillStyle = resolvedColors[index] ?? resolvedColors[0];
-            ctx.fill();
+			ctx.beginPath();
+			ctx.moveTo(centerX, centerY);
+			ctx.arc(centerX, centerY, radius, startAngle, startAngle + sweepAngle);
+			ctx.closePath();
+			ctx.fillStyle = resolvedColors[index] ?? resolvedColors[0];
+			ctx.fill();
 
-            startAngle += sweepAngle;
-        });
+			startAngle += sweepAngle;
+		});
 
-        // Outline
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-        ctx.closePath();
-        ctx.strokeStyle = resolvedOutline;
-        ctx.lineWidth = outlineStrokeWidth;
-        ctx.stroke();
-    }, [backgroundColor, colors, degrees, outlineColor, outlineStrokeWidth, size]);
+		// Outline
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+		ctx.closePath();
+		ctx.strokeStyle = resolvedOutline;
+		ctx.lineWidth = outlineStrokeWidth;
+		ctx.stroke();
+	}, [
+		backgroundColor,
+		colors,
+		degrees,
+		outlineColor,
+		outlineStrokeWidth,
+		size,
+	]);
 
-    return <canvas ref={canvasRef} />;
+	return <canvas ref={canvasRef} />;
 };
 
 export default PieChart;
