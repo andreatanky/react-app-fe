@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
 
 interface PieChartProps {
 	colors?: string[];
@@ -22,14 +23,15 @@ const resolveCssColor = (value: string) => {
 };
 
 const PieChart: React.FC<PieChartProps> = ({
-	colors = ["var(--color-on-surface-variant)", "var(--color-surface)"],
+	colors,
 	degrees,
-	outlineColor = "var(--color-on-surface-variant)",
+	outlineColor,
 	outlineStrokeWidth = 1.5,
 	size = 18,
-	backgroundColor = "var(--color-surface)",
+	backgroundColor,
 }) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const theme = useTheme();
 
 	useEffect(() => {
 		const canvas = canvasRef.current;
@@ -52,9 +54,19 @@ const PieChart: React.FC<PieChartProps> = ({
 
 		ctx.clearRect(0, 0, size, size);
 
-		const resolvedOutline = resolveCssColor(outlineColor);
-		const resolvedBackground = resolveCssColor(backgroundColor);
-		const resolvedColors = colors.map(resolveCssColor);
+		const outline =
+			outlineColor ?? theme.palette.surface.onVariant;
+		const background =
+			backgroundColor ?? theme.palette.surface.base;
+		const sliceColors =
+			colors ?? [
+				theme.palette.surface.onVariant,
+				theme.palette.surface.base,
+			];
+
+		const resolvedOutline = resolveCssColor(outline);
+		const resolvedBackground = resolveCssColor(background);
+		const resolvedColors = sliceColors.map(resolveCssColor);
 
 		// Fill base circle with background color to represent uncovered degrees
 		ctx.beginPath();
@@ -96,6 +108,7 @@ const PieChart: React.FC<PieChartProps> = ({
 		outlineColor,
 		outlineStrokeWidth,
 		size,
+		theme,
 	]);
 
 	return <canvas ref={canvasRef} />;
