@@ -3,7 +3,6 @@ import { useTheme as useMuiTheme } from "@mui/material/styles";
 import { useNavigate } from "@tanstack/react-router";
 import {
 	type FormEvent,
-	type KeyboardEvent,
 	useCallback,
 	useEffect,
 	useMemo,
@@ -15,7 +14,6 @@ import CompactNavBar from "./components/CompactNavBar/CompactNavBar";
 import { HomeFilterBar } from "./components/HomeFilterBar";
 import { HomeSearchInput } from "./components/HomeSearchInput";
 import { HomeTopNav } from "./components/HomeTopNav/HomeTopNav";
-import CompactSearchBar from "./components/SearchMode/CompactSearchBar";
 import { useActiveProductsFeed } from "./hooks/useActiveProductsFeed";
 import { useExpiredProducts } from "./hooks/useExpiredProducts";
 import { useHomeSearch } from "./hooks/useHomeSearch";
@@ -25,13 +23,11 @@ import { useHomeScrollRestoration } from "./ScrollRestorationProvider";
 import { LazyStatus, Pane, Panes } from "./styled/feeds";
 import {
 	Logo,
-	SearchModePlaceholder,
 	SearchSection,
 	SearchSectionWrapper,
 	StyledContainer,
 	WrapperLanding,
 } from "./styled/layout";
-import { PageOverlay } from "./styled/overlay";
 import { Page } from "./styled/Page";
 
 export const HomePage = () => {
@@ -40,9 +36,6 @@ export const HomePage = () => {
 	const {
 		query,
 		selectedFilters,
-		isSearchMode,
-		enterSearchMode,
-		exitSearchMode,
 	} = useHomeSearch();
 	const muiTheme = useMuiTheme();
 	const filterSectionRef = useRef<HTMLDivElement | null>(null);
@@ -76,23 +69,10 @@ export const HomePage = () => {
 	};
 
 	const handleSearchAction = useCallback(() => {
-		if (!isSearchMode) {
-			enterSearchMode();
-		}
-	}, [enterSearchMode, isSearchMode]);
+		console.log("navigate to search");
+	}, []);
 
 	const handleSearchInputActivate = handleSearchAction;
-
-	const handleExitSearch = () => {
-		exitSearchMode();
-	};
-
-	const handleOverlayKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === "Enter" || event.key === " ") {
-			event.preventDefault();
-			handleExitSearch();
-		}
-	};
 
 	const handleHelp = () => {
 		console.log("help click");
@@ -108,7 +88,7 @@ export const HomePage = () => {
 	);
 	const showCompactNav = useStickyVisibility(
 		filterSectionRef,
-		!isSearchMode,
+		true,
 		stickyObserverOptions,
 	);
 
@@ -129,67 +109,30 @@ export const HomePage = () => {
 		}
 	}, [fetchNextPage, shouldFetchMore]);
 
-	useEffect(() => {
-		if (isSearchMode && typeof window !== "undefined") {
-			window.scrollTo({ top: 0, behavior: "smooth" });
-		}
-	}, [isSearchMode]);
-
-	const trimmedQuery = query.trim();
-	const showBackdrop =
-		isSearchMode && trimmedQuery.length === 0 && selectedFilters.length === 0;
 
 	return (
 		<Page>
-			{showBackdrop && (
-				<PageOverlay
-					role="button"
-					tabIndex={0}
-					aria-label="Exit search mode"
-					onClick={handleExitSearch}
-					onKeyDown={handleOverlayKeyDown}
-				/>
-			)}
-			{isSearchMode ? (
-				<CompactSearchBar
-					visible
-					onSearchSubmit={submitSearch}
-					onExitSearch={handleExitSearch}
-				/>
-			) : (
-				<CompactNavBar
-					visible={showCompactNav}
-					onSearchAction={handleSearchAction}
-					onHelp={handleHelp}
-					onLogout={handleLogout}
-				/>
-			)}
-			<StyledContainer blurred={showBackdrop}>
-				{isSearchMode ? (
-					<SearchModePlaceholder />
-				) : (
-					<>
-						<WrapperLanding>
-							<HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />
-							<Logo
-								src={dailyNewsLogo}
-								alt="DailyNews"
-								width={460}
-								height={56}
-							/>
-						</WrapperLanding>
-						<SearchSectionWrapper ref={filterSectionRef}>
-							<SearchSection>
-								<HomeSearchInput
-									onSubmit={submitSearch}
-									onActivate={handleSearchInputActivate}
-									backgroundColor={muiTheme.palette.surface.containerHigh}
-								/>
-								<HomeFilterBar />
-							</SearchSection>
-						</SearchSectionWrapper>
-					</>
-				)}
+			<CompactNavBar
+				visible={showCompactNav}
+				onSearchAction={handleSearchAction}
+				onHelp={handleHelp}
+				onLogout={handleLogout}
+			/>
+			<StyledContainer blurred={false}>
+				<WrapperLanding>
+					<HomeTopNav onHelp={handleHelp} onLogout={handleLogout} />
+					<Logo src={dailyNewsLogo} alt="DailyNews" width={460} height={56} />
+				</WrapperLanding>
+				<SearchSectionWrapper ref={filterSectionRef}>
+					<SearchSection>
+						<HomeSearchInput
+							onSubmit={submitSearch}
+							onActivate={handleSearchInputActivate}
+							backgroundColor={muiTheme.palette.surface.containerHigh}
+						/>
+						<HomeFilterBar />
+					</SearchSection>
+				</SearchSectionWrapper>
 
 				<Panes container spacing={3}>
 					<Grid size={{ xs: 12, md: 8 }}>

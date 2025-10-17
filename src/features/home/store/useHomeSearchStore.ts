@@ -4,15 +4,12 @@ import { createJSONStorage, persist } from "zustand/middleware";
 type HomeSearchState = {
 	query: string;
 	selectedFilters: string[];
-	isSearchMode: boolean;
 };
 
 type HomeSearchActions = {
 	setQuery: (value: string) => void;
 	toggleFilter: (key: string) => void;
 	clearFilters: () => void;
-	enterSearchMode: () => void;
-	exitSearchMode: () => void;
 };
 
 export const useHomeSearchStore = create<HomeSearchState & HomeSearchActions>()(
@@ -20,7 +17,6 @@ export const useHomeSearchStore = create<HomeSearchState & HomeSearchActions>()(
 		(set) => ({
 			query: "",
 			selectedFilters: [],
-			isSearchMode: false,
 			setQuery: (value) => set({ query: value }),
 			toggleFilter: (key) =>
 				set((s) => ({
@@ -29,9 +25,6 @@ export const useHomeSearchStore = create<HomeSearchState & HomeSearchActions>()(
 						: [...s.selectedFilters, key],
 				})),
 			clearFilters: () => set({ selectedFilters: [] }),
-			enterSearchMode: () => set({ isSearchMode: true }),
-			exitSearchMode: () =>
-				set({ isSearchMode: false, query: "", selectedFilters: [] }),
 		}),
 		{
 			name: "home-search", // storage key
@@ -42,7 +35,6 @@ export const useHomeSearchStore = create<HomeSearchState & HomeSearchActions>()(
 			partialize: (s) => ({
 				query: s.query,
 				selectedFilters: s.selectedFilters,
-				isSearchMode: s.isSearchMode,
 			}),
 		},
 	),

@@ -6,12 +6,9 @@ export const useHomeSearch = () => {
 		useShallow((state) => ({
 			query: state.query,
 			selectedFilters: state.selectedFilters,
-			isSearchMode: state.isSearchMode,
 			setQuery: state.setQuery,
 			toggleFilter: state.toggleFilter,
 			clearFilters: state.clearFilters,
-			enterSearchMode: state.enterSearchMode,
-			exitSearchMode: state.exitSearchMode,
 		})),
 	);
 };
