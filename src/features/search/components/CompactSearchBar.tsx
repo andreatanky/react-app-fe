@@ -1,8 +1,8 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Button from "@mui/material/Button";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
 import { type FormEvent, forwardRef } from "react";
 
+import { ActionButtonWithTextAndIcon } from "../../../components/buttons/ActionButtonWithTextAndIcon";
 import { FilterBar } from "../../../components/search/Filterbar";
 import { Searchbar } from "../../../components/search/Searchbar";
 import { useSearchFilters } from "../../../features/search/hooks/useSearchFilters";
@@ -34,15 +34,13 @@ export const CompactSearchBar = forwardRef<
 		<Container ref={ref}>
 			<Content>
 				<TopRow>
-					<Button
+					<ActionButtonWithTextAndIcon
 						type="button"
 						color="inherit"
-						startIcon={<ArrowBackIcon />}
+						icon={<ArrowBackIcon />}
+						label="Back"
 						onClick={onExitSearch}
-						 sx={{ textTransform: 'none' }}
-					>
-						Back
-					</Button>
+					/>
 				</TopRow>
 				<SearchRow>
 					<Searchbar
