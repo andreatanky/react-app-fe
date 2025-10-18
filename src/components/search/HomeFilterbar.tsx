@@ -1,6 +1,6 @@
-import { HOME_FILTERS } from "../constants";
-import { useHomeSearch } from "../hooks/useHomeSearch";
-import { FilterBar } from "./FilterBar/FilterBar";
+import { HOME_FILTERS } from "../../features/home/constants";
+import { useHomeSearch } from "../../features/home/hooks/useHomeSearch";
+import { FilterBar } from "./Filterbar";
 
 type HomeFilterBarProps = {
 	className?: string;

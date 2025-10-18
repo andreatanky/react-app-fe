@@ -1,10 +1,10 @@
-import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from "@mui/material/IconButton";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
 import { type FormEvent, forwardRef } from "react";
 
-import { HomeFilterBar } from "../HomeFilterBar";
-import { HomeSearchInput } from "../HomeSearchInput";
+import { HomeFilterBar } from "../../../components/search/HomeFilterbar";
+import { HomeSearchInput } from "../../../components/search/HomeSearchInput";
 import {
 	BottomRow,
 	Container,
@@ -15,7 +15,6 @@ import {
 } from "./CompactSearchBar.styled";
 
 type CompactSearchBarProps = {
-	visible: boolean;
 	onSearchSubmit: (event: FormEvent) => void;
 	onExitSearch: () => void;
 };
@@ -23,18 +22,17 @@ type CompactSearchBarProps = {
 export const CompactSearchBar = forwardRef<
 	HTMLDivElement,
 	CompactSearchBarProps
->(({ visible, onSearchSubmit, onExitSearch }, ref) => {
+>(({ onSearchSubmit, onExitSearch }, ref) => {
 	const muiTheme = useMuiTheme();
 
 	return (
-		<Container data-compact-search-bar ref={ref} visible={visible}>
+		<Container data-compact-search-bar ref={ref}>
 			<Content>
 				<TopRow>
 					<IconButton aria-label="Cancel search" onClick={onExitSearch}>
-						<CloseIcon />
+						<ArrowBackIcon />
 					</IconButton>
 				</TopRow>
-				<FullWidthDivider />
 				<SearchRow>
 					<HomeSearchInput
 						onSubmit={onSearchSubmit}
@@ -45,6 +43,7 @@ export const CompactSearchBar = forwardRef<
 					<HomeFilterBar />
 				</BottomRow>
 			</Content>
+			<FullWidthDivider />
 		</Container>
 	);
 });

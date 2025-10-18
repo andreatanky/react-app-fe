@@ -1,5 +1,5 @@
 import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
-import { HomeFilterBar } from "../HomeFilterBar";
+import { HomeFilterBar } from "../../../components/search/HomeFilterbar";
 import {
 	ActionButton,
 	Actions,

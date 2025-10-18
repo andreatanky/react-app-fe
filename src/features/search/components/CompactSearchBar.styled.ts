@@ -2,19 +2,13 @@ import styled from "@emotion/styled";
 
 export const Container = styled("div", {
 	shouldForwardProp: (prop) => prop !== "visible",
-})<{ visible: boolean }>(({ theme, visible }) => ({
+})(({ theme }) => ({
 	position: "fixed",
 	top: 0,
 	left: 0,
 	right: 0,
 	width: "100%",
-	backgroundColor: theme.palette.surface.base,
-	boxShadow: theme.shadows[8],
-	transform: visible ? "translateY(0)" : "translateY(-100%)",
-	transition: theme.transitions.create("transform", {
-		duration: theme.transitions.duration.enteringScreen,
-	}),
-	zIndex: theme.zIndex.modal + 1,
+	backgroundColor: theme.palette.surface.container
 }));
 
 export const Content = styled("div")(({ theme }) => ({
@@ -32,8 +26,9 @@ export const Content = styled("div")(({ theme }) => ({
 export const TopRow = styled("div")(({ theme }) => ({
 	display: "flex",
 	alignItems: "center",
-	justifyContent: "flex-end",
-	gap: theme.spacing(1),
+	justifyContent: "flex-start",
+	gap: theme.spacing(0.5),
+	font: "inherit"
 }));
 
 export const FullWidthDivider = styled("hr")(({ theme }) => ({

@@ -2,9 +2,9 @@ import { useTheme as useMuiTheme } from "@mui/material/styles";
 import {
 	Searchbar,
 	type SearchbarProps,
-} from "../../../components/search/Searchbar";
+} from "./Searchbar";
 
-import { useHomeSearch } from "../hooks/useHomeSearch";
+import { useHomeSearch } from "../../features/home/hooks/useHomeSearch";
 
 type HomeSearchInputProps = Omit<SearchbarProps, "query" | "onQueryChange"> & {
 	backgroundColor?: string;

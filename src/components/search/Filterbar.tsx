@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import { FilterPill } from "../../../../components/buttons/FilterPill";
-import { Bar, ClearButton, SegmentGroup } from "./FilterBar.styled";
+import { FilterPill } from "../buttons/FilterPill";
+import { Bar, ClearButton, SegmentGroup } from "./Filterbar.styled";
 
 export type FilterItem = {
 	key: string;

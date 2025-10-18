@@ -10,10 +10,10 @@ import {
 } from "react";
 import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
 import ProductCard from "../product/components/cards/ProductCard";
-import CompactNavBar from "./components/CompactNavBar/CompactNavBar";
-import { HomeFilterBar } from "./components/HomeFilterBar";
-import { HomeSearchInput } from "./components/HomeSearchInput";
-import { HomeTopNav } from "./components/HomeTopNav/HomeTopNav";
+import CompactNavBar from "./components/CompactNavBar";
+import { HomeFilterBar } from "../../components/search/HomeFilterbar";
+import { HomeSearchInput } from "../../components/search/HomeSearchInput";
+import { HomeTopNav } from "./components/HomeTopNav";
 import { useActiveProductsFeed } from "./hooks/useActiveProductsFeed";
 import { useExpiredProducts } from "./hooks/useExpiredProducts";
 import { useHomeSearch } from "./hooks/useHomeSearch";
@@ -28,7 +28,7 @@ import {
 	StyledContainer,
 	WrapperLanding,
 } from "./styled/layout";
-import { Page } from "./styled/Page";
+import { Page } from "../../components/layouts/Page";
 
 export const HomePage = () => {
 	useHomeScrollRestoration();
@@ -69,8 +69,8 @@ export const HomePage = () => {
 	};
 
 	const handleSearchAction = useCallback(() => {
-		console.log("navigate to search");
-	}, []);
+		navigate({ to: "/search" });
+	}, [navigate]);
 
 	const handleSearchInputActivate = handleSearchAction;
 
