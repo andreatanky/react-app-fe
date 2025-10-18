@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from "react";
 import { ActionButton, Actions, Container, Spacer } from "./HomeTopNav.styled";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 type HomeTopNavProps = {
 	onHelp: () => void;
@@ -26,6 +27,7 @@ export const HomeTopNav = ({ onHelp, onLogout }: HomeTopNavProps) => {
 						onClick={onLogout}
 						aria-label="Log Out"
 					>
+						<LogoutIcon/>
 						Log Out
 					</ActionButton>
 				</Actions>
