@@ -4,8 +4,8 @@ import { type FormEvent, forwardRef } from "react";
 import { FilterPill } from "../../../components/buttons/FilterPill";
 import { FilterBar } from "../../../components/search/Filterbar";
 import { Searchbar } from "../../../components/search/Searchbar";
-import { useHomeFilters } from "../../home/hooks/useHomeFilters";
-import { useHomeSearch } from "../../home/hooks/useHomeSearch";
+import { useSearchFilters } from "../../../features/search/hooks/useSearchFilters";
+import { useSearch } from "../../../features/search/hooks/useSearch";
 import {
 	BottomRow,
 	Container,
@@ -25,9 +25,9 @@ export const CompactSearchBar = forwardRef<
 	CompactSearchBarProps
 >(({ onSearchSubmit, onExitSearch }, ref) => {
 	const muiTheme = useMuiTheme();
-	const { query, setQuery } = useHomeSearch();
+	const { query, setQuery } = useSearch();
 	const { items, selectedFilters, handleToggle, clearFilters } =
-		useHomeFilters();
+		useSearchFilters();
 
 	return (
 		<Container data-compact-search-bar ref={ref}>

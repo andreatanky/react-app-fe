@@ -1,6 +1,6 @@
-import type { FilterItem } from "../../components/search/Filterbar";
+import type { FilterItem } from "../../../components/search/Filterbar";
 
-export const HOME_FILTERS: FilterItem[] = [
+export const DEFAULT_SEARCH_FILTERS: FilterItem[] = [
 	{ key: "urgent", label: "Urgent" },
 	{ key: "unread", label: "Unread", segment: "readStatus" },
 	{ key: "inProgress", label: "In Progress", segment: "readStatus" },

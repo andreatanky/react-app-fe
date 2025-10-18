@@ -17,8 +17,8 @@ import CompactNavBar from "./components/CompactNavBar";
 import { HomeTopNav } from "./components/HomeTopNav";
 import { useActiveProductsFeed } from "./hooks/useActiveProductsFeed";
 import { useExpiredProducts } from "./hooks/useExpiredProducts";
-import { useHomeFilters } from "./hooks/useHomeFilters";
-import { useHomeSearch } from "./hooks/useHomeSearch";
+import { useSearchFilters } from "../../features/search/hooks/useSearchFilters";
+import { useSearch } from "../../features/search/hooks/useSearch";
 import { useInfiniteScrollTrigger } from "./hooks/useInfiniteScrollTrigger";
 import { useStickyVisibility } from "./hooks/useStickyVisibility";
 import { useHomeScrollRestoration } from "./ScrollRestorationProvider";
@@ -34,13 +34,13 @@ import {
 export const HomePage = () => {
 	useHomeScrollRestoration();
 	const navigate = useNavigate();
-	const { query, setQuery } = useHomeSearch();
+	const { query, setQuery } = useSearch();
 	const {
 		items: filterItems,
-		selectedFilters: activeFilters,
+		selectedFilters,
 		handleToggle,
 		clearFilters,
-	} = useHomeFilters();
+	} = useSearchFilters();
 	const muiTheme = useMuiTheme();
 	const filterSectionRef = useRef<HTMLDivElement | null>(null);
 	const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -57,9 +57,9 @@ export const HomePage = () => {
 
 	const submitSearch = useCallback(
 		(_event: FormEvent) => {
-			console.log("search submit:", query, activeFilters);
+			console.log("search submit:", query, selectedFilters);
 		},
-		[query, activeFilters],
+		[query, selectedFilters],
 	);
 
 	const handleProductClick = (id: string) => {
@@ -138,7 +138,7 @@ export const HomePage = () => {
 						/>
 						<FilterBar
 							items={filterItems}
-							selectedKeys={activeFilters}
+							selectedKeys={selectedFilters}
 							onToggle={handleToggle}
 							onClear={clearFilters}
 						/>

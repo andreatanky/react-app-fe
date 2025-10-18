@@ -1,4 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
+
 import { Page } from "../../components/layouts/Page";
 import CompactSearchBar from "./components/CompactSearchBar";
 

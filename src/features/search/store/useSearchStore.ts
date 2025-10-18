@@ -1,40 +1,37 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-type HomeSearchState = {
+type SearchState = {
 	query: string;
 	selectedFilters: string[];
 };
 
-type HomeSearchActions = {
+type SearchActions = {
 	setQuery: (value: string) => void;
-	toggleFilter: (key: string) => void;
+	setSelectedFilters: (filters: string[]) => void;
 	clearFilters: () => void;
 };
 
-export const useHomeSearchStore = create<HomeSearchState & HomeSearchActions>()(
+export type SearchStore = SearchState & SearchActions;
+
+export const useSearchStore = create<SearchStore>()(
 	persist(
 		(set) => ({
 			query: "",
 			selectedFilters: [],
 			setQuery: (value) => set({ query: value }),
-			toggleFilter: (key) =>
-				set((s) => ({
-					selectedFilters: s.selectedFilters.includes(key)
-						? s.selectedFilters.filter((v) => v !== key)
-						: [...s.selectedFilters, key],
-				})),
+			setSelectedFilters: (filters) => set({ selectedFilters: filters }),
 			clearFilters: () => set({ selectedFilters: [] }),
 		}),
 		{
-			name: "home-search", // storage key
+			name: "search-state",
 			storage:
 				typeof window === "undefined"
 					? undefined
 					: createJSONStorage(() => sessionStorage),
-			partialize: (s) => ({
-				query: s.query,
-				selectedFilters: s.selectedFilters,
+			partialize: (state) => ({
+				query: state.query,
+				selectedFilters: state.selectedFilters,
 			}),
 		},
 	),

@@ -1,6 +1,6 @@
 import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
 import { FilterBar } from "../../../components/search/Filterbar";
-import { useHomeFilters } from "../hooks/useHomeFilters";
+import { useSearchFilters } from "../../../features/search/hooks/useSearchFilters";
 import {
 	ActionButton,
 	Actions,
@@ -25,7 +25,7 @@ export const CompactNavBar = ({
 	onHelp,
 	onLogout,
 }: CompactNavBarProps) => {
-	const { items, selectedFilters, handleToggle, clearFilters } = useHomeFilters();
+	const { items, selectedFilters, handleToggle, clearFilters } = useSearchFilters();
 
 	return (
 		<Container visible={visible}>

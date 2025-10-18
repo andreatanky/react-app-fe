@@ -1,13 +1,14 @@
 import { useShallow } from "zustand/react/shallow";
-import { useHomeSearchStore } from "../store/useHomeSearchStore";
 
-export const useHomeSearch = () => {
-	return useHomeSearchStore(
+import { useSearchStore } from "../store/useSearchStore";
+
+export const useSearch = () => {
+	return useSearchStore(
 		useShallow((state) => ({
 			query: state.query,
 			selectedFilters: state.selectedFilters,
 			setQuery: state.setQuery,
-			toggleFilter: state.toggleFilter,
+			setSelectedFilters: state.setSelectedFilters,
 			clearFilters: state.clearFilters,
 		})),
 	);
