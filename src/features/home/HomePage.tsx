@@ -2,7 +2,6 @@ import Grid from "@mui/material/Grid";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
 import { useNavigate } from "@tanstack/react-router";
 import {
-	type FormEvent,
 	useCallback,
 	useEffect,
 	useMemo,
@@ -18,7 +17,6 @@ import { HomeTopNav } from "./components/HomeTopNav";
 import { useActiveProductsFeed } from "./hooks/useActiveProductsFeed";
 import { useExpiredProducts } from "./hooks/useExpiredProducts";
 import { useSearchFilters } from "../../features/search/hooks/useSearchFilters";
-import { useSearch } from "../../features/search/hooks/useSearch";
 import { useInfiniteScrollTrigger } from "./hooks/useInfiniteScrollTrigger";
 import { useStickyVisibility } from "./hooks/useStickyVisibility";
 import { useHomeScrollRestoration } from "./ScrollRestorationProvider";
@@ -34,7 +32,7 @@ import {
 export const HomePage = () => {
 	useHomeScrollRestoration();
 	const navigate = useNavigate();
-	const { query, setQuery } = useSearch();
+	
 	const {
 		items: filterItems,
 		selectedFilters,
@@ -54,13 +52,6 @@ export const HomePage = () => {
 
 	const { products: expiredProducts, isLoading: isLoadingExpired } =
 		useExpiredProducts();
-
-	const submitSearch = useCallback(
-		(_event: FormEvent) => {
-			console.log("search submit:", query, selectedFilters);
-		},
-		[query, selectedFilters],
-	);
 
 	const handleProductClick = (id: string) => {
 		navigate({
@@ -130,10 +121,8 @@ export const HomePage = () => {
 				<SearchSectionWrapper ref={filterSectionRef}>
 					<SearchSection>
 						<Searchbar
-							onSubmit={submitSearch}
+							onSubmit={() => {}}
 							onActivate={handleSearchInputActivate}
-							query={query}
-							onQueryChange={setQuery}
 							backgroundColor={muiTheme.palette.surface.containerHigh}
 						/>
 						<FilterBar

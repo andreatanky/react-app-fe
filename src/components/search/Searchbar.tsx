@@ -3,9 +3,9 @@ import { forwardRef, type FormEvent } from "react";
 import searchIcon from "@/assets/icons/search_icon.svg";
 
 export type SearchbarProps = {
-	query: string;
-	onQueryChange: (newQuery: string) => void;
-	onSubmit: (e: FormEvent) => void;
+	query?: string;
+	onQueryChange?: (newQuery: string) => void;
+	onSubmit?: (e: FormEvent) => void;
 	placeholder?: string;
 	backgroundColor?: string;
 	onActivate?: () => void;
@@ -64,7 +64,7 @@ export const Searchbar = forwardRef<HTMLInputElement, SearchbarProps>(
 	) {
 		const handleSubmit = (e: FormEvent) => {
 			e.preventDefault();
-			onSubmit(e);
+			onSubmit?.(e);
 		};
 
 		const handleActivate = () => onActivate?.();
@@ -81,7 +81,7 @@ export const Searchbar = forwardRef<HTMLInputElement, SearchbarProps>(
 				<Input
 					ref={ref}
 					value={query}
-					onChange={(e) => onQueryChange(e.target.value)}
+					onChange={(e) => onQueryChange?.(e.target.value)}
 					onFocus={handleActivate}
 					onClick={handleActivate}
 					type="search"
