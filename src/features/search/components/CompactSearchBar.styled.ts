@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Container = styled("div", {
-	shouldForwardProp: (prop) => prop !== "visible",
-})(({ theme }) => ({
+export const Container = styled("div")(({ theme }) => ({
 	position: "fixed",
 	top: 0,
 	left: 0,

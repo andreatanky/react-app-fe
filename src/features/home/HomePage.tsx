@@ -9,13 +9,15 @@ import {
 	useRef,
 } from "react";
 import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
+import { FilterBar } from "../../components/search/Filterbar";
+import { Searchbar } from "../../components/search/Searchbar";
+import { Page } from "../../components/layouts/Page";
 import ProductCard from "../product/components/cards/ProductCard";
 import CompactNavBar from "./components/CompactNavBar";
-import { HomeFilterBar } from "../../components/search/HomeFilterbar";
-import { HomeSearchInput } from "../../components/search/HomeSearchInput";
 import { HomeTopNav } from "./components/HomeTopNav";
 import { useActiveProductsFeed } from "./hooks/useActiveProductsFeed";
 import { useExpiredProducts } from "./hooks/useExpiredProducts";
+import { useHomeFilters } from "./hooks/useHomeFilters";
 import { useHomeSearch } from "./hooks/useHomeSearch";
 import { useInfiniteScrollTrigger } from "./hooks/useInfiniteScrollTrigger";
 import { useStickyVisibility } from "./hooks/useStickyVisibility";
@@ -28,15 +30,17 @@ import {
 	StyledContainer,
 	WrapperLanding,
 } from "./styled/layout";
-import { Page } from "../../components/layouts/Page";
 
 export const HomePage = () => {
 	useHomeScrollRestoration();
 	const navigate = useNavigate();
+	const { query, setQuery } = useHomeSearch();
 	const {
-		query,
-		selectedFilters,
-	} = useHomeSearch();
+		items: filterItems,
+		selectedFilters: activeFilters,
+		handleToggle,
+		clearFilters,
+	} = useHomeFilters();
 	const muiTheme = useMuiTheme();
 	const filterSectionRef = useRef<HTMLDivElement | null>(null);
 	const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -53,9 +57,9 @@ export const HomePage = () => {
 
 	const submitSearch = useCallback(
 		(_event: FormEvent) => {
-			console.log("search submit:", query, selectedFilters);
+			console.log("search submit:", query, activeFilters);
 		},
-		[query, selectedFilters],
+		[query, activeFilters],
 	);
 
 	const handleProductClick = (id: string) => {
@@ -125,12 +129,19 @@ export const HomePage = () => {
 				</WrapperLanding>
 				<SearchSectionWrapper ref={filterSectionRef}>
 					<SearchSection>
-						<HomeSearchInput
+						<Searchbar
 							onSubmit={submitSearch}
 							onActivate={handleSearchInputActivate}
+							query={query}
+							onQueryChange={setQuery}
 							backgroundColor={muiTheme.palette.surface.containerHigh}
 						/>
-						<HomeFilterBar />
+						<FilterBar
+							items={filterItems}
+							selectedKeys={activeFilters}
+							onToggle={handleToggle}
+							onClear={clearFilters}
+						/>
 					</SearchSection>
 				</SearchSectionWrapper>
 

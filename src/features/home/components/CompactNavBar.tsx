@@ -1,5 +1,6 @@
 import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
-import { HomeFilterBar } from "../../../components/search/HomeFilterbar";
+import { FilterBar } from "../../../components/search/Filterbar";
+import { useHomeFilters } from "../hooks/useHomeFilters";
 import {
 	ActionButton,
 	Actions,
@@ -23,30 +24,39 @@ export const CompactNavBar = ({
 	onSearchAction,
 	onHelp,
 	onLogout,
-}: CompactNavBarProps) => (
-	<Container visible={visible}>
-		<Content>
-			<TopRow>
-				<Logo src={dailyNewsLogo} alt="DailyNews" />
-				<Actions>
-					<ActionButton type="button" color="inherit" onClick={onSearchAction}>
-						Search
-					</ActionButton>
-					<ActionButton type="button" color="inherit" onClick={onHelp}>
-						Help &amp; FAQ
-					</ActionButton>
-					<ActionButton type="button" color="inherit" onClick={onLogout}>
-						Log Out
-					</ActionButton>
-				</Actions>
-			</TopRow>
+}: CompactNavBarProps) => {
+	const { items, selectedFilters, handleToggle, clearFilters } = useHomeFilters();
 
-			<FullWidthDivider />
-			<BottomRow>
-				<HomeFilterBar />
-			</BottomRow>
-		</Content>
-	</Container>
-);
+	return (
+		<Container visible={visible}>
+			<Content>
+				<TopRow>
+					<Logo src={dailyNewsLogo} alt="DailyNews" />
+					<Actions>
+						<ActionButton type="button" color="inherit" onClick={onSearchAction}>
+							Search
+						</ActionButton>
+						<ActionButton type="button" color="inherit" onClick={onHelp}>
+							Help &amp; FAQ
+						</ActionButton>
+						<ActionButton type="button" color="inherit" onClick={onLogout}>
+							Log Out
+						</ActionButton>
+					</Actions>
+				</TopRow>
+
+				<FullWidthDivider />
+				<BottomRow>
+					<FilterBar
+						items={items}
+						selectedKeys={selectedFilters}
+						onToggle={handleToggle}
+						onClear={clearFilters}
+					/>
+				</BottomRow>
+			</Content>
+		</Container>
+	);
+};
 
 export default CompactNavBar;
