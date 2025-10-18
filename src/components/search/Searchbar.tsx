@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import type { FormEvent } from "react";
+import { forwardRef, type FormEvent } from "react";
 import searchIcon from "@/assets/icons/search_icon.svg";
 
 export type SearchbarProps = {
@@ -9,6 +9,7 @@ export type SearchbarProps = {
 	placeholder?: string;
 	backgroundColor?: string;
 	onActivate?: () => void;
+	autoFocus?: boolean;
 };
 
 const Form = styled("form", {
@@ -48,41 +49,49 @@ const Input = styled("input")(({ theme }) => ({
 	},
 }));
 
-export const Searchbar = ({
-	query,
-	onQueryChange,
-	onSubmit,
-	placeholder = "Search all article titles",
-	backgroundColor,
-	onActivate,
-}: SearchbarProps) => {
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		onSubmit(e);
-	};
+export const Searchbar = forwardRef<HTMLInputElement, SearchbarProps>(
+	function Searchbar(
+		{
+			query,
+			onQueryChange,
+			onSubmit,
+			placeholder = "Search all article titles",
+			backgroundColor,
+			onActivate,
+			autoFocus = false,
+		},
+		ref,
+	) {
+		const handleSubmit = (e: FormEvent) => {
+			e.preventDefault();
+			onSubmit(e);
+		};
 
-	const handleActivate = () => onActivate?.();
+		const handleActivate = () => onActivate?.();
 
-	return (
-		<Form
-			role="search"
-			onSubmit={handleSubmit}
-			$backgroundColor={backgroundColor}
-		>
-			<Icon aria-hidden="true">
-				<Logo src={searchIcon} alt="Search" />
-			</Icon>
-			<Input
-				value={query}
-				onChange={(e) => onQueryChange(e.target.value)}
-				onFocus={handleActivate}
-				onClick={handleActivate}
-				type="search"
-				placeholder={placeholder}
-				aria-label="Search articles"
-			/>
-		</Form>
-	);
-};
+		return (
+			<Form
+				role="search"
+				onSubmit={handleSubmit}
+				$backgroundColor={backgroundColor}
+			>
+				<Icon aria-hidden="true">
+					<Logo src={searchIcon} alt="Search" />
+				</Icon>
+				<Input
+					ref={ref}
+					value={query}
+					onChange={(e) => onQueryChange(e.target.value)}
+					onFocus={handleActivate}
+					onClick={handleActivate}
+					type="search"
+					placeholder={placeholder}
+					aria-label="Search articles"
+					autoFocus={autoFocus}
+				/>
+			</Form>
+		);
+	},
+);
 
 export default Searchbar;

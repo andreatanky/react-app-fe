@@ -42,14 +42,15 @@ export const CompactSearchBar = forwardRef<
 						onClick={onExitSearch}
 					/>
 				</TopRow>
-				<SearchRow>
-					<Searchbar
-						onSubmit={onSearchSubmit}
-						query={query}
-						onQueryChange={setQuery}
-						backgroundColor={muiTheme.palette.surface.on}
-					/>
-				</SearchRow>
+			<SearchRow>
+				<Searchbar
+					onSubmit={onSearchSubmit}
+					query={query}
+					onQueryChange={setQuery}
+					backgroundColor={muiTheme.palette.surface.on}
+					autoFocus
+				/>
+			</SearchRow>
 				<BottomRow>
 					<FilterBar
 						items={items}
