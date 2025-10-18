@@ -6,40 +6,33 @@ import type { Product } from "../../models/Product";
 import ProductCardFooter from "./ProductCardFooter";
 import ProductCardHeader from "./ProductCardHeader";
 
-// ========================
-// Styled Components (Emotion)
-// ========================
-
-const Card = styled.article`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 1rem 1.2rem;
-  border: 1px solid var(--color-outline);
-  color: var(--color-on-surface, #ffffff);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-  &.read {
-    background: var(--color-surface);
-  }
-
-  &.unread {
-    background: var(--color-surface-bright);
-    border-left: 4px solid var(--color-outline);
-  }
-
-  &.expired {
-    background: var(--color-surface-container);
-    border-left: none;
-    border-right: none;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  }
-`;
+const Card = styled.article(({ theme }) => ({
+	position: "relative",
+	display: "flex",
+	flexDirection: "column",
+	width: "100%",
+	padding: "1rem 1.2rem",
+	border: `1px solid ${theme.palette.surface.outline}`,
+	color: theme.palette.surface.on,
+	transition: "transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease",
+	"&.read": {
+		background: theme.palette.surface.base,
+	},
+	"&.unread": {
+		background: theme.palette.surface.bright,
+		borderLeft: `4px solid ${theme.palette.surface.outline}`,
+	},
+	"&.expired": {
+		background: theme.palette.surface.container,
+		borderLeft: "none",
+		borderRight: "none",
+	},
+	"&:hover": {
+		transform: "translateY(-2px)",
+		boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
+		background: theme.palette.surface.container,
+	},
+}));
 
 const Background = styled.img`
   position: absolute;
@@ -62,20 +55,22 @@ const Content = styled.div`
   gap: 0.5rem;
 `;
 
-const Title = styled.h3`
-  margin: 0;
-  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-  line-height: 1.35;
-  color: var(--color-on-surface, #ffffff);
-  font-weight: 400;
-
-  &.titleClamp {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-`;
+const Title = styled.h3(({ theme }) => ({
+	margin: 0,
+	fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)",
+	lineHeight: 1.35,
+	color: theme.palette.surface.on,
+	fontWeight: 400,
+	"&.titleClamp": {
+		display: "-webkit-box",
+		WebkitLineClamp: 2,
+		WebkitBoxOrient: "vertical",
+		overflow: "hidden",
+	},
+	"&.activeTitle": {
+		textDecoration: "underline",
+	},
+}));
 
 // ========================
 // Logic
@@ -134,7 +129,7 @@ export const ProductCard = ({
 	};
 
 	const statusClass = expired ? "expired" : isRead ? "read" : "unread";
-	const titleClass = expired ? "titleClamp" : "";
+	const titleClass = `${expired ? "titleClamp" : ""} ${!expired ? "activeTitle" : ""}`.trim();
 
 	return (
 		<Card
