@@ -6,7 +6,7 @@ import type { Product } from "../../models/Product";
 import ProductCardFooter from "./ProductCardFooter";
 import ProductCardHeader from "./ProductCardHeader";
 
-const Card = styled.article(({ theme }) => ({
+const Card = styled.article<{ $highlightTitle: boolean }>(({ theme, $highlightTitle }) => ({
 	position: "relative",
 	display: "flex",
 	flexDirection: "column",
@@ -31,6 +31,13 @@ const Card = styled.article(({ theme }) => ({
 		transform: "translateY(-2px)",
 		boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
 		background: theme.palette.surface.container,
+	...(!$highlightTitle
+			? {}
+			: {
+					"& h3": {
+						textDecoration: "underline",
+					},
+				}),
 	},
 }));
 
@@ -66,9 +73,6 @@ const Title = styled.h3(({ theme }) => ({
 		WebkitLineClamp: 2,
 		WebkitBoxOrient: "vertical",
 		overflow: "hidden",
-	},
-	"&.activeTitle": {
-		textDecoration: "underline",
 	},
 }));
 
@@ -129,10 +133,11 @@ export const ProductCard = ({
 	};
 
 	const statusClass = expired ? "expired" : isRead ? "read" : "unread";
-	const titleClass = `${expired ? "titleClamp" : ""} ${!expired ? "activeTitle" : ""}`.trim();
+const titleClass = expired ? "titleClamp" : undefined;
 
 	return (
 		<Card
+			$highlightTitle={!expired}
 			className={`${statusClass} ${className ?? ""}`}
 			onClick={() => onProductClick(product.systemDocId)}
 			onKeyDown={handleKeyDown}
