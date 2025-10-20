@@ -12,10 +12,7 @@ export const SearchPage = () => {
 	const { query, setQuery } = useSearch();
 		
 	const {
-		items: filterItems,
-		selectedFilters,
-		handleToggle,
-		clearFilters,
+		selectedFilters
 	} = useSearchFilters();
 
 	const submitSearch = useCallback(
