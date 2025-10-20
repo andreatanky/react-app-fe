@@ -1,22 +1,17 @@
 import Grid from "@mui/material/Grid";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
 import { useNavigate } from "@tanstack/react-router";
-import {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import dailyNewsLogo from "@/assets/images/dailynews_logo.png";
+import { Page } from "../../components/layouts/Page";
 import { FilterBar } from "../../components/search/Filterbar";
 import { Searchbar } from "../../components/search/Searchbar";
-import { Page } from "../../components/layouts/Page";
+import { useSearchFilters } from "../../features/search/hooks/useSearchFilters";
 import ProductCard from "../product/components/cards/ProductCard";
 import CompactNavBar from "./components/CompactNavBar";
 import { HomeTopNav } from "./components/HomeTopNav";
 import { useActiveProductsFeed } from "./hooks/useActiveProductsFeed";
 import { useExpiredProducts } from "./hooks/useExpiredProducts";
-import { useSearchFilters } from "../../features/search/hooks/useSearchFilters";
 import { useInfiniteScrollTrigger } from "./hooks/useInfiniteScrollTrigger";
 import { useStickyVisibility } from "./hooks/useStickyVisibility";
 import { useHomeScrollRestoration } from "./ScrollRestorationProvider";
@@ -32,7 +27,7 @@ import {
 export const HomePage = () => {
 	useHomeScrollRestoration();
 	const navigate = useNavigate();
-	
+
 	const {
 		items: filterItems,
 		selectedFilters,
@@ -103,7 +98,6 @@ export const HomePage = () => {
 			fetchNextPage();
 		}
 	}, [fetchNextPage, shouldFetchMore]);
-
 
 	return (
 		<Page>

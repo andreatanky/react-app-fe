@@ -5,8 +5,8 @@ import { type FormEvent, forwardRef } from "react";
 import { ActionButtonWithTextAndIcon } from "../../../components/buttons/ActionButtonWithTextAndIcon";
 import { FilterBar } from "../../../components/search/Filterbar";
 import { Searchbar } from "../../../components/search/Searchbar";
-import { useSearchFilters } from "../../../features/search/hooks/useSearchFilters";
 import { useSearch } from "../../../features/search/hooks/useSearch";
+import { useSearchFilters } from "../../../features/search/hooks/useSearchFilters";
 import {
 	BottomRow,
 	Container,
@@ -42,15 +42,15 @@ export const CompactSearchBar = forwardRef<
 						onClick={onExitSearch}
 					/>
 				</TopRow>
-			<SearchRow>
-				<Searchbar
-					onSubmit={onSearchSubmit}
-					query={query}
-					onQueryChange={setQuery}
-					backgroundColor={muiTheme.palette.surface.on}
-					autoFocus
-				/>
-			</SearchRow>
+				<SearchRow>
+					<Searchbar
+						onSubmit={onSearchSubmit}
+						query={query}
+						onQueryChange={setQuery}
+						backgroundColor={muiTheme.palette.surface.on}
+						autoFocus
+					/>
+				</SearchRow>
 				<BottomRow>
 					<FilterBar
 						items={items}

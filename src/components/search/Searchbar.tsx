@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { forwardRef, type FormEvent } from "react";
+import { type FormEvent, forwardRef } from "react";
 import searchIcon from "@/assets/icons/search_icon.svg";
 
 export type SearchbarProps = {

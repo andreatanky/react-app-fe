@@ -25,7 +25,8 @@ export const CompactNavBar = ({
 	onHelp,
 	onLogout,
 }: CompactNavBarProps) => {
-	const { items, selectedFilters, handleToggle, clearFilters } = useSearchFilters();
+	const { items, selectedFilters, handleToggle, clearFilters } =
+		useSearchFilters();
 
 	return (
 		<Container visible={visible}>
@@ -33,7 +34,11 @@ export const CompactNavBar = ({
 				<TopRow>
 					<Logo src={dailyNewsLogo} alt="DailyNews" />
 					<Actions>
-						<ActionButton type="button" color="inherit" onClick={onSearchAction}>
+						<ActionButton
+							type="button"
+							color="inherit"
+							onClick={onSearchAction}
+						>
 							Search
 						</ActionButton>
 						<ActionButton type="button" color="inherit" onClick={onHelp}>

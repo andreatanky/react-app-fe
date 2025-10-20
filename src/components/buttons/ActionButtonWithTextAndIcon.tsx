@@ -15,32 +15,39 @@ const StyledButton = styled(Button, {
 		!["$backgroundColor", "$hoverBackgroundColor", "$textColor"].includes(
 			prop as string,
 		),
-})<StyledButtonProps>(({ theme, $backgroundColor, $hoverBackgroundColor, $textColor }) => {
-	const baseStyles = {
-		textTransform: "none" as const,
-		padding: theme.spacing(0.75, 2.25),
-		borderRadius: theme.shape.borderRadius,
-		gap: theme.spacing(0.25),
-	} as const;
+})<StyledButtonProps>(
+	({ theme, $backgroundColor, $hoverBackgroundColor, $textColor }) => {
+		const baseStyles = {
+			textTransform: "none" as const,
+			padding: theme.spacing(0.75, 2.25),
+			borderRadius: theme.shape.borderRadius,
+			gap: theme.spacing(0.25),
+		} as const;
 
-	const backgroundStyles =
-		$backgroundColor !== undefined ? { backgroundColor: $backgroundColor } : {};
+		const backgroundStyles =
+			$backgroundColor !== undefined
+				? { backgroundColor: $backgroundColor }
+				: {};
 
-	const colorStyles = $textColor !== undefined ? { color: $textColor } : {};
+		const colorStyles = $textColor !== undefined ? { color: $textColor } : {};
 
-	const hoverBackground =
-		$hoverBackgroundColor ?? ($backgroundColor !== undefined ? $backgroundColor : undefined);
+		const hoverBackground =
+			$hoverBackgroundColor ??
+			($backgroundColor !== undefined ? $backgroundColor : undefined);
 
-	const hoverStyles =
-		hoverBackground !== undefined ? { "&:hover": { backgroundColor: hoverBackground } } : {};
+		const hoverStyles =
+			hoverBackground !== undefined
+				? { "&:hover": { backgroundColor: hoverBackground } }
+				: {};
 
-	return {
-		...baseStyles,
-		...backgroundStyles,
-		...colorStyles,
-		...hoverStyles,
-	};
-});
+		return {
+			...baseStyles,
+			...backgroundStyles,
+			...colorStyles,
+			...hoverStyles,
+		};
+	},
+);
 
 export type ActionButtonWithTextAndIconProps = Omit<
 	ButtonProps,
@@ -58,14 +65,7 @@ export const ActionButtonWithTextAndIcon = forwardRef<
 	ActionButtonWithTextAndIconProps
 >(
 	(
-		{
-			label,
-			icon,
-			backgroundColor,
-			hoverBackgroundColor,
-			textColor,
-			...rest
-		},
+		{ label, icon, backgroundColor, hoverBackgroundColor, textColor, ...rest },
 		ref,
 	) => {
 		return (

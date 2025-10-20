@@ -9,9 +9,9 @@ import type { StoreApi } from "zustand";
 import { HelpPage } from "../../features/help/HelpPage";
 import { HomePage } from "../../features/home/HomePage";
 import { ReadingEnvironmentPage } from "../../features/reading/ReadingEnvironmentPage";
+import { SearchPage } from "../../features/search/SearchPage";
 import type { AuthStore } from "../store/authStore";
 import { AppRootLayout } from "./AppRootLayout";
-import { SearchPage } from "../../features/search/SearchPage";
 
 export type AppRouterContext = {
 	queryClient: QueryClient;
@@ -50,8 +50,12 @@ const searchRoute = createRoute({
 	component: SearchPage,
 });
 
-
-const routeTree = rootRoute.addChildren([homeRoute, readingRoute, helpRoute, searchRoute]);
+const routeTree = rootRoute.addChildren([
+	homeRoute,
+	readingRoute,
+	helpRoute,
+	searchRoute,
+]);
 
 export const createAppRouter = (context: AppRouterContext) =>
 	createRouter({

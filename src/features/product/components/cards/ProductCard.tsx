@@ -6,40 +6,43 @@ import type { Product } from "../../models/Product";
 import ProductCardFooter from "./ProductCardFooter";
 import ProductCardHeader from "./ProductCardHeader";
 
-const Card = styled.article<{ $highlightTitle: boolean }>(({ theme, $highlightTitle }) => ({
-	position: "relative",
-	display: "flex",
-	flexDirection: "column",
-	width: "100%",
-	padding: "1rem 1.2rem",
-	border: `1px solid ${theme.palette.surface.outline}`,
-	color: theme.palette.surface.on,
-	transition: "transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease",
-	"&.read": {
-		background: theme.palette.surface.base,
-	},
-	"&.unread": {
-		background: theme.palette.surface.bright,
-		borderLeft: `4px solid ${theme.palette.surface.outline}`,
-	},
-	"&.expired": {
-		background: theme.palette.surface.container,
-		borderLeft: "none",
-		borderRight: "none",
-	},
-	"&:hover": {
-		transform: "translateY(-2px)",
-		boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
-		background: theme.palette.surface.container,
-	...(!$highlightTitle
-			? {}
-			: {
-					"& h3": {
-						textDecoration: "underline",
-					},
-				}),
-	},
-}));
+const Card = styled.article<{ $highlightTitle: boolean }>(
+	({ theme, $highlightTitle }) => ({
+		position: "relative",
+		display: "flex",
+		flexDirection: "column",
+		width: "100%",
+		padding: "1rem 1.2rem",
+		border: `1px solid ${theme.palette.surface.outline}`,
+		color: theme.palette.surface.on,
+		transition:
+			"transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease",
+		"&.read": {
+			background: theme.palette.surface.base,
+		},
+		"&.unread": {
+			background: theme.palette.surface.bright,
+			borderLeft: `4px solid ${theme.palette.surface.outline}`,
+		},
+		"&.expired": {
+			background: theme.palette.surface.container,
+			borderLeft: "none",
+			borderRight: "none",
+		},
+		"&:hover": {
+			transform: "translateY(-2px)",
+			boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
+			background: theme.palette.surface.container,
+			...(!$highlightTitle
+				? {}
+				: {
+						"& h3": {
+							textDecoration: "underline",
+						},
+					}),
+		},
+	}),
+);
 
 const Background = styled.img`
   position: absolute;
@@ -133,7 +136,7 @@ export const ProductCard = ({
 	};
 
 	const statusClass = expired ? "expired" : isRead ? "read" : "unread";
-const titleClass = expired ? "titleClamp" : undefined;
+	const titleClass = expired ? "titleClamp" : undefined;
 
 	return (
 		<Card

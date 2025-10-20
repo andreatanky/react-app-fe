@@ -6,7 +6,7 @@ export const Container = styled("div")(({ theme }) => ({
 	left: 0,
 	right: 0,
 	width: "100%",
-	backgroundColor: theme.palette.surface.container
+	backgroundColor: theme.palette.surface.container,
 }));
 
 export const Content = styled("div")(({ theme }) => ({
@@ -26,7 +26,7 @@ export const TopRow = styled("div")(({ theme }) => ({
 	alignItems: "center",
 	justifyContent: "flex-start",
 	gap: theme.spacing(0.5),
-	font: "inherit"
+	font: "inherit",
 }));
 
 export const FullWidthDivider = styled("hr")(({ theme }) => ({

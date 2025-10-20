@@ -1,7 +1,7 @@
 import type { CSSObject } from "@emotion/react";
 import styled from "@emotion/styled";
+import DoneIcon from "@mui/icons-material/Done";
 import type { ButtonHTMLAttributes } from "react";
-import DoneIcon from '@mui/icons-material/Done';
 
 type PillStyleProps = {
 	selected?: boolean;
@@ -118,7 +118,7 @@ export function FilterPill({
 			showDivider={showDivider}
 			{...rest}
 		>
-			{selected && <DoneIcon/>}
+			{selected && <DoneIcon />}
 			<Label>{label}</Label>
 		</PillButton>
 	);
